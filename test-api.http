@@ -1,0 +1,71 @@
+@token = eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjI0OTc5MDQ2LCJleHAiOjE2MjU4NDMwNDZ9.Yzx6UCatz9onDsjgXG3obmwc1hHekdyQa8zT5abH-pOYEzY3yPtPuUsm0uY5Iqx8rjYMKahuf_xv0s_iWzmXnA
+@baseUrl = https://localhost:8443
+###
+POST  {{baseUrl}}/auth/login
+content-type: application/json
+
+{
+  "email": "lenguyenhoangkhang2@gmail.com",
+  "password": "ABWh4Waf3x"
+}
+
+### 
+# @name getAllCategories
+GET {{baseUrl}}/categories
+Authorization: Bearer {{token}}
+
+###
+# @name createBrand
+POST {{baseUrl}}/brands
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Xiaomi"
+}
+
+###
+# @name getAllBrands
+Get {{baseUrl}}/brands
+Authorization: Bearer {{token}}
+
+###
+# @name createProduct
+POST {{baseUrl}}/products
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryJuUhHP7C2SNmlGQU
+Authorization: Bearer {{token}}
+
+------WebKitFormBoundaryJuUhHP7C2SNmlGQU
+Content-Disposition: form-data; name="product_image"; filename="acer-aspire-7-a715-42g-r4st-r5-nhqaysv004-16-400x400.jpg"
+Content-Type: image/jpeg
+
+
+------WebKitFormBoundaryJuUhHP7C2SNmlGQU
+Content-Disposition: form-data; name="product"; filename="blob"
+Content-Type: application/json
+
+{"name":"Samsung Galaxy S21 5G","description":"Đón năm mới rộn ràng cùng với series Galaxy S21 đến từ Samsung. Phiên bản tiêu chuẩn cho series lần này là Samsung Galaxy S21 5G, nổi bật với thiết kế tràn viền, cụm camera ấn tượng cho đến hiệu năng mạnh mẽ hàng đầu.","categoryId":1,"brandId":1,"price":"20990000","quantity":"99","discount":"5"}
+------WebKitFormBoundaryJuUhHP7C2SNmlGQU--
+
+###
+# @name getAllProduct
+GET {{baseUrl}}/products HTTP/1.1
+Authorization: bearer {{token}}
+
+###
+# @name getProductById
+GET {{baseUrl}}/products/6 HTTP/1.1
+
+###
+# @name getFileUpload
+
+GET {{baseUrl}}/files HTTP/1.1
+
+###
+
+GET {{baseUrl}}/orders/user HTTP/1.1
+Authorization: Bearer {{token}}
+
+###
+GET {{baseUrl}}/user HTTP/1.1
+Authorization: Bearer {{token}}
