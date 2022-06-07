@@ -14,7 +14,7 @@ const ReviewList = ({ isAuth, productId, closeButton }) => {
   const [listReview, setListReview] = useState(undefined);
   const [isReviewed, setIsReviewed] = useState(false);
   const [comment, setComment] = useState("");
-  const [rating, setRating] = useState(5);
+  const [rating, setRating] = useState(3);
   const [hasNewReview, setHasNewReview] = useState(false);
 
   useEffect(() => {
@@ -102,6 +102,7 @@ const ReviewList = ({ isAuth, productId, closeButton }) => {
             </Form.Group>
             <Rating
               className="mb-2"
+              style={{color: "#FADB14"}}
               step={1}
               fractions={2}
               initialRating={rating}

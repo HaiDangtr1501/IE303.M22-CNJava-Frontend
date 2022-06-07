@@ -9,8 +9,8 @@ import LoadingIndicator from "../LoadingIndicator";
 
 const ProductList = (props) => {
   const [productList, setProductList] = useState([]);
-  // const [page, setPage] = useState(props.page);
-  // const [totalPage, setTotalPage] = useState();
+  const [page, setPage] = useState(props.page);
+  const [totalPage, setTotalPage] = useState();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const ProductList = (props) => {
           maxPrice: props.maxPrice,
         });
         setProductList(response.data.content);
-        // setTotalPage(response.data.totalPages);
+        setTotalPage(response.data.totalPages);
         if (props.handleWithTotalPage) {
           props.handleWithTotalPage(response.data.totalPages);
         }

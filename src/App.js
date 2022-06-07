@@ -35,6 +35,7 @@ import LoadingIndicator from "./components/LoadingIndicator";
 import ListUserPage from "./components/Admin/ListUserPage";
 import SendEmailVerification from "./components/EmailVerificationPage";
 
+
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [authenticated, setAuthenticated] = useState(false);

@@ -5,6 +5,7 @@ const AuthApi = {
     return axiosClient.get("/user/me");
   },
 
+
   login: (email, password) => {
     return axiosClient.post("/auth/login", {
       email: email,
