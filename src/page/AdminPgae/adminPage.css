@@ -1,0 +1,18 @@
+.admin-container{
+    padding: 30px 30px;
+    margin: 0 -204px;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    background-color: rgb(247, 239, 251);
+}
+.admin-container_sidebar{
+    flex-basis: 20%;
+    margin-right: 30px;
+    /* position: fixed;
+    top: 50px;
+    z-index: 1000; */
+}
+.admin-container_page{
+    flex-basis: 78%;
+}
