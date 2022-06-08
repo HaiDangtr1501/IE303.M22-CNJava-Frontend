@@ -1,0 +1,30 @@
+.sideBarItem-container{  
+    margin: 50px 0;
+    border-bottom: #fff 1px solid;
+    transition: all 0.5s ease-out;   
+}
+.sideBarItem-container p{
+    margin-bottom: 10px;
+    opacity: 0.8;
+    color:#fff;
+    font-weight: 500;
+}
+.sideBarItem-container:hover{
+    transform:scale(1.08);
+    opacity: 1;
+   
+}
+.sideBarItem-container:hover p{
+    opacity: 1;
+}
+.sideBarItem-link:hover{
+    text-decoration: none;
+}
+.sideBarItem-link_content{
+    text-align: center;
+}
+.icon{
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}

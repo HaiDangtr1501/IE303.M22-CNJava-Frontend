@@ -50,7 +50,36 @@ const AdminOrderList = () => {
   return (
     <>
       <Row>
-        <Col xs="4">
+      <Col xs="8">
+          {loading ? (
+            <LoadingIndicator size="40px" height="400px" />
+          ) : (
+            <OrderList isAdmin={true} pageOrderData={pageOrder} />
+          )}
+          {pageOrder && pageOrder.content.length > 0 && !loading && (
+            <ReactPaginate
+              pageCount={pageOrder.totalPages}
+              pageRangeDisplayed={pageOrder.numberOfElements}
+              marginPagesDisplayed={5}
+              forcePage={search.page}
+              nextLabel={<FaAngleRight />}
+              previousLabel={<FaAngleLeft />}
+              breakClassName={"page-item"}
+              breakLinkClassName={"page-link"}
+              containerClassName={"pagination"}
+              pageClassName={"page-item"}
+              pageLinkClassName={"page-link"}
+              previousClassName={"page-item"}
+              previousLinkClassName={"page-link"}
+              nextClassName={"page-item"}
+              nextLinkClassName={"page-link"}
+              activeClassName={"active"}
+              disabledClassName={"disabled"}
+              onPageChange={({ selected }) => setSearch({ ...search, page: selected })}
+            />
+          )}
+        </Col>
+        <Col xs="4" className="mt-4">
           <Card>
             <Card.Header>
               <span className="font-weight-bold">Tìm kiếm đơn hàng</span>
@@ -98,12 +127,10 @@ const AdminOrderList = () => {
               </Form>
             </Card.Body>
           </Card>
-        </Col>
-        <Col xs="8">
           <Row>
-            <Col xs="3">
+            <Col xs="12" className="mt-4">
               <Form.Group>
-                <Form.Label htmlFor="size">Số lượng hiển thị</Form.Label>
+                <Form.Label htmlFor="size"><b>Số lượng hiển thị</b></Form.Label>
                 <Form.Control
                   as="select"
                   name="size"
@@ -120,33 +147,6 @@ const AdminOrderList = () => {
               </Form.Group>
             </Col>
           </Row>
-          {loading ? (
-            <LoadingIndicator size="40px" height="400px" />
-          ) : (
-            <OrderList isAdmin={true} pageOrderData={pageOrder} />
-          )}
-          {pageOrder && pageOrder.content.length > 0 && !loading && (
-            <ReactPaginate
-              pageCount={pageOrder.totalPages}
-              pageRangeDisplayed={pageOrder.numberOfElements}
-              marginPagesDisplayed={5}
-              forcePage={search.page}
-              nextLabel={<FaAngleRight />}
-              previousLabel={<FaAngleLeft />}
-              breakClassName={"page-item"}
-              breakLinkClassName={"page-link"}
-              containerClassName={"pagination"}
-              pageClassName={"page-item"}
-              pageLinkClassName={"page-link"}
-              previousClassName={"page-item"}
-              previousLinkClassName={"page-link"}
-              nextClassName={"page-item"}
-              nextLinkClassName={"page-link"}
-              activeClassName={"active"}
-              disabledClassName={"disabled"}
-              onPageChange={({ selected }) => setSearch({ ...search, page: selected })}
-            />
-          )}
         </Col>
       </Row>
     </>

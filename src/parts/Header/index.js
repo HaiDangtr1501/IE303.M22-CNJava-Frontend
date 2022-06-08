@@ -5,7 +5,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 
 const Header = ({ currentUser, isAdmin, logOut }) => {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" className="mb-4" variant="dark">
+    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Brand>
         <Nav.Link
@@ -14,7 +14,7 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
           className="text-light font-weight-bold"
           to="/"
         >
-          SHOP CN-JAVA
+          DDNK
         </Nav.Link>
       </Navbar.Brand>
       <Navbar.Collapse>
@@ -38,6 +38,11 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
             <>
               <Nav.Item>
                 <Nav.Link as={NavLink} activeClassName="active" to="/admin/add-product">
+                  Quản lý
+                </Nav.Link>
+              </Nav.Item>
+              {/* <Nav.Item>
+                <Nav.Link as={NavLink} activeClassName="active" to="/admin/add-product">
                   Thêm Sản Phẩm
                 </Nav.Link>
               </Nav.Item>
@@ -55,7 +60,7 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
                 <Nav.Link as={NavLink} activeClassName="active" to="/admin/header-image">
                   QL Quảng Cáo
                 </Nav.Link>
-              </Nav.Item>
+              </Nav.Item> */}
             </>
           )}
         </Nav>

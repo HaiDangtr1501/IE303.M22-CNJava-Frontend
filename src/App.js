@@ -34,7 +34,7 @@ import HeaderImagePage from "./components/Header-Image-Page";
 import LoadingIndicator from "./components/LoadingIndicator";
 import ListUserPage from "./components/Admin/ListUserPage";
 import SendEmailVerification from "./components/EmailVerificationPage";
-
+import Admin from "./page/AdminPgae/admin";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -110,7 +110,7 @@ const App = () => {
     <div>
       <Header currentUser={currentUser} isAdmin={isAdmin} logOut={logOut} />
 
-      <div className="container mt3">
+      <div className="container mt-3">
         <Switch>
           <Route
             exact
@@ -130,7 +130,9 @@ const App = () => {
           />
           <Route
             path="/signup"
-            render={(props) => <Signup isAuthentication={authenticated} {...props} />}
+            render={(props) => (
+              <Signup isAuthentication={authenticated} {...props} />
+            )}
           ></Route>
 
           {!authLoading && (
@@ -166,7 +168,7 @@ const App = () => {
             oauth2Login={() => setAuthenticated(true)}
             component={OAuth2RedirectHandler}
           ></Route>
-          {isAdmin && <Route exact path={"/admin/add-product"} component={SaveProduct} />}
+          {/* {isAdmin && <Route exact path={"/admin/add-product"} component={SaveProduct} />} */}
           {isAdmin && (
             <Route
               exact
@@ -174,6 +176,44 @@ const App = () => {
               render={(props) => <SaveProduct editMode={true} {...props} />}
             ></Route>
           )}
+          {/* Admin */}
+          {isAdmin && (
+            <Route
+              exact
+              path={"/admin/add-product"}
+              render={(props) => (
+                <Admin mainPage={<SaveProduct />} {...props} />
+              )}
+            />
+          )}
+          {isAdmin && (
+            <Route
+              exact
+              path={"/admin/user-accounts"}
+              render={(props) => (
+                <Admin mainPage={<ListUserPage />} {...props} />
+              )}
+            />
+          )}
+          {isAdmin && (
+            <Route
+              exact
+              path={"/admin/orders"}
+              render={(props) => (
+                <Admin mainPage={<AdminOrderList />} {...props} />
+              )}
+            />
+          )}
+          {isAdmin && (
+            <Route
+              exact
+              path={"/admin/header-image"}
+              render={(props) => (
+                <Admin mainPage={<HeaderImagePage />} {...props} />
+              )}
+            />
+          )}
+          {/* Admin */}
           <Route
             exact
             path="/products/:productId"
@@ -220,10 +260,18 @@ const App = () => {
               />
             )}
           ></Route>
-          <Route exact path="/checkout/success" component={PaymentSuccess}></Route>
-          <Route exact path="/checkout/cancel" component={PaymentCancel}></Route>
+          <Route
+            exact
+            path="/checkout/success"
+            component={PaymentSuccess}
+          ></Route>
+          <Route
+            exact
+            path="/checkout/cancel"
+            component={PaymentCancel}
+          ></Route>
 
-          {!authLoading && (
+          {/* {!authLoading && (
             <AdminRoute
               exact
               path="/admin/orders"
@@ -239,7 +287,12 @@ const App = () => {
               isAdmin={isAdmin}
               component={ListUserPage}
             />
-          )}
+          )} */}
+          {/* <Route
+            exact
+            path="/admin/header-image"
+            render={(props) => <HeaderImagePage />}
+          ></Route> */}
           <Route
             exact
             path="/reset-password"
@@ -248,17 +301,15 @@ const App = () => {
           <Route
             path="/reset-password/:token"
             render={(props) => (
-              <EditPassword isAuth={authenticated} onPasswordChange={() => logOut()} />
+              <EditPassword
+                isAuth={authenticated}
+                onPasswordChange={() => logOut()}
+              />
             )}
           ></Route>
           <Route
             path="/confirm-user-email/:token"
             render={(props) => <SendEmailVerification />}
-          ></Route>
-          <Route
-            exact
-            path="/admin/header-image"
-            render={(props) => <HeaderImagePage />}
           ></Route>
           {!authLoading ? (
             <Route component={Error}></Route>
