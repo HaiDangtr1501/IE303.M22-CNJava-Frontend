@@ -1,11 +1,17 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, Image } from "react-bootstrap";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
 const Header = ({ currentUser, isAdmin, logOut }) => {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar 
+      collapseOnSelect 
+      expand="lg" 
+      bg="dark" 
+      variant="dark" 
+      style={{width:"100%", position:"sticky", top: "0", zIndex: "1000"}}
+    >
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Brand>
         <Nav.Link
@@ -41,32 +47,13 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
                   Quản lý
                 </Nav.Link>
               </Nav.Item>
-              {/* <Nav.Item>
-                <Nav.Link as={NavLink} activeClassName="active" to="/admin/add-product">
-                  Thêm Sản Phẩm
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link as={NavLink} activeClassName="active" to="/admin/user-accounts">
-                  QL Tài Khoản
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link as={NavLink} activeClassName="active" to="/admin/orders">
-                  QL Đơn Hàng
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link as={NavLink} activeClassName="active" to="/admin/header-image">
-                  QL Quảng Cáo
-                </Nav.Link>
-              </Nav.Item> */}
             </>
           )}
         </Nav>
         {currentUser ? (
           <Nav className="ml-auto">
-            <Nav.Item>
+            {!isAdmin ? (
+              <Nav.Item>
               <Nav.Link
                 as={NavLink}
                 activeClassName="active"
@@ -76,6 +63,17 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
                 Giỏ Hàng
                 <AiOutlineShoppingCart size="30px" />
               </Nav.Link>
+              </Nav.Item>
+            ) : (
+              <>
+              </>
+            )}
+            <Nav.Item>
+              <Image
+                style={{ width: "2.5rem" }}
+                roundedCircle
+                src={currentUser.avatarUrl || "/img/avatar_default.png"}
+              ></Image>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link as={NavLink} activeClassName="active" to="/profile">
