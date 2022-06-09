@@ -17,6 +17,7 @@ import OAuth2RedirectHandler from "./components/OAuth2RedirectHandler";
 import PrivateRoute from "./components/PrivateRoute";
 import Error from "./components/Error";
 import SaveProduct from "./components/SaveProduct";
+import LayoutLoginSignup from "./components/LayoutLoginSignup/LayoutLoginSignup"
 
 import Header from "./parts/Header";
 import Home from "./parts/Home";
@@ -117,7 +118,7 @@ const App = () => {
             path={["/", "/home"]}
             render={(props) => <Home isAdmin={isAdmin} {...props} />}
           />
-          <Route
+          {/* <Route
             path={"/login"}
             render={(props) => (
               <Login
@@ -133,8 +134,20 @@ const App = () => {
             render={(props) => (
               <Signup isAuthentication={authenticated} {...props} />
             )}
-          ></Route>
+          ></Route> */}
+          <Route
+            path="/login"
+            render={(props) => (
+              <LayoutLoginSignup  
+                onLocalLogin={loginHandler}
+                isAuthentication={authenticated}
+                loading={authLoading}
+                {...props}
+              />
+            )}
+          >
 
+          </Route>
           {!authLoading && (
             <PrivateRoute
               path="/profile"

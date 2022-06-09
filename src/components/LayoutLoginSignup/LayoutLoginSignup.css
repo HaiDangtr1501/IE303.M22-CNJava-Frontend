@@ -1,0 +1,31 @@
+.login-signup__wrapper{
+    margin: 0 auto;
+  margin-top: 50px;
+  width: 665px;
+  height: 70px;
+  border: 1px solid #c4c4c4;
+  border-radius: 10px 10px 0px 0px;
+  display: flex;
+  justify-self: space-between;
+  background-color: #f6f8fa;
+  color: #000;
+  cursor: pointer;
+  position: relative;
+    top: 10px;
+
+    z-index: 1;
+}
+.login-signup--login,
+.login-signup--signup{
+  width: 350px;
+    height: 70px;
+    border-radius: 0px 10px 0px 0px;
+    font-size: 20px;
+    text-align: center;
+    padding-top: 20px;
+}
+
+.login-signup__wrapper .active{
+  background-color: #fff;
+}
+
