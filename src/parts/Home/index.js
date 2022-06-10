@@ -15,7 +15,7 @@ import { BsCartPlus } from "react-icons/bs";
 import "./homeStyle.css";
 
 
-const Home = ({ isAdmin, isAuthentication,currentUser }) => {
+const Home = ({ isAdmin, isAuthentication, currentUser }) => {
   const [sliderList, setSliderList] = useState([]);
   const [bannerList, setBannerList] = useState([]);
   console.log("check auth home", isAuthentication)
@@ -85,7 +85,7 @@ const Home = ({ isAdmin, isAuthentication,currentUser }) => {
           <p>Để có nhiều ưu đãi hấp dẫn!</p>
           <button className="home-recommend_btn">
           {
-            !currentUser ? (<Link to="/signup" className="home-recommend_link">Đăng ký ngay</Link>) : (<Link to="/laptop" className="home-recommend_link">Khám phá ngay</Link>)
+            !currentUser ? (<Link to="/login" className="home-recommend_link">Đăng ký ngay</Link>) : (<Link to="/laptop" className="home-recommend_link">Khám phá ngay</Link>)
           }
           </button>
       </div>

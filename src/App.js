@@ -118,7 +118,7 @@ const App = () => {
             exact
             path={["/", "/home"]}
 
-            render={(props) => <Home isAdmin={isAdmin} isAuthentication={authenticated} {...props} />}
+            render={(props) => <Home isAdmin={isAdmin} isAuthentication={authenticated} currentUser={currentUser} {...props} />}
 
           />
           {/* <Route

@@ -229,11 +229,11 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
         {!isAdmin  &&(
           checkQuantity ? (
             <Button disabled={checkQuantity} variant="danger" id="buttonAddCart">
-              Thêm giỏ hàng
+              Thêm giỏ hàng <BsCartPlus/>
             </Button>
           ):(
-            <Button disabled={checkQuantity} variant="primary" onClick={addToCart} id="buttonAddCart">
-              Thêm giỏ hàng
+            <Button disabled={checkQuantity} variant="success" onClick={addToCart} id="buttonAddCart">
+              Thêm giỏ hàng <BsCartPlus/>
             </Button>
           )
          
