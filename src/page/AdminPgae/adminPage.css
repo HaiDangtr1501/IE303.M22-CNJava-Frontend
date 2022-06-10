@@ -1,18 +1,22 @@
 .admin-container{
-    padding: 30px 30px;
-    margin: 0 -204px;
+    /* padding: 30px 30px; */
+    /* margin: 0 -204px; */
     display: flex;
     flex-direction: row;
     position: relative;
+    padding: 30px 20px 30px 30px;
     background-color: rgb(247, 239, 251);
+}
+.admin-main{
+    
 }
 .admin-container_sidebar{
     flex-basis: 20%;
-    margin-right: 30px;
+    margin-right: 50px;
     /* position: fixed;
     top: 50px;
     z-index: 1000; */
 }
 .admin-container_page{
-    flex-basis: 78%;
+    flex-basis: 75%;
 }

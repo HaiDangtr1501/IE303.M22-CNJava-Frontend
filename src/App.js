@@ -20,6 +20,7 @@ import SaveProduct from "./components/SaveProduct";
 import LayoutLoginSignup from "./components/LayoutLoginSignup/LayoutLoginSignup"
 
 import Header from "./parts/Header";
+import Footer from "./parts/Footer";
 import Home from "./parts/Home";
 import ProductPage from "./components/ProductPage";
 import CartPage from "./components/CartPage";
@@ -111,12 +112,14 @@ const App = () => {
     <div>
       <Header currentUser={currentUser} isAdmin={isAdmin} logOut={logOut} />
 
-      <div className="container mt-3">
+      <div>
         <Switch>
           <Route
             exact
             path={["/", "/home"]}
+
             render={(props) => <Home isAdmin={isAdmin} isAuthentication={authenticated} {...props} />}
+
           />
           {/* <Route
             path={"/login"}
@@ -341,7 +344,7 @@ const App = () => {
           )}
         </Switch>
       </div>
-
+      <Footer/>        
       <Alert
         stack={{ limit: 3 }}
         timeout={3000}
