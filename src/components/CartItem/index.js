@@ -23,7 +23,6 @@ const CartItem = ({ data, onChange }) => {
         setHasUpdate(false);
       }
     };
-
     const timer = setTimeout(() => {
       if (hasUpdate) {
         updateCartItem();
@@ -32,6 +31,8 @@ const CartItem = ({ data, onChange }) => {
 
     return () => clearTimeout(timer);
   }, [enable, quantity, hasUpdate, onChange, data]);
+
+  
 
   const onChangeQuantity = (e) => {
     setQuantity(e.target.value);

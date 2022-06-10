@@ -86,7 +86,7 @@ const UserContact = ({ country, province, district, detail, phone, onUpdated }) 
         <Form.Group controlId="phone">
           <Form.Label>Số điện thoại</Form.Label>
           <Form.Control
-            type="text"
+            type="number"
             readOnly={!updatedInfo}
             value={userContactInfo.phone}
             onChange={(e) =>

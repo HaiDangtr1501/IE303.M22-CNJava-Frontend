@@ -19,7 +19,7 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
     const official = product.images.find(({ type }) => type === "Official");
     return official.url;
   };
-
+  console.log("product id: ", product)
   const addToCart = async () => {
     try {
       const response = await CartApi.addProduct(product.id);
@@ -43,6 +43,10 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
     }
   };
 
+  const resolve = Math.round(
+    (product.price - (product.price * product.discount) / 100) / 10000
+  ) * 10000
+  console.log(resolve);
   return (
     <Card className="product-card" key={product.id}>
       <Link to={`/products/${product.id}`}>
@@ -58,28 +62,34 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
           <h3 className="product-card_title" style={{ cursor: "pointer" }}>{product.name}</h3>
         </Link>
         <h5>
-          <NumberFormat
-            value={
-              Math.round(
-                (product.price - (product.price * product.discount) / 100) /
-                  10000
-              ) * 10000
-            }
-            thousandSeparator={true}
-            suffix="đ"
-            displayType="text"
+          
+
           />
         </h5>
         <h5 className="old-price_container">
+
+          />{" "} */}
+          {resolve.toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+          })} {" "}
           {product.discount !== 0 && (
             <React.Fragment>
-              <NumberFormat
+              <span
+                className="old-price"
+              >
+              {product.price.toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+              })} {" "}
+              </span>
+              {/* <NumberFormat
                 className="old-price"
                 value={product.price}
                 thousandSeparator={true}
                 suffix="đ"
                 displayType="text"
-              />{" "}
+              />{" "} */}
               <Badge variant="danger">-{product.discount}%</Badge>
             </React.Fragment>
           )}
@@ -129,6 +139,7 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
             Thêm vào giỏ hàng <BsCartPlus/>
           </Button>)
         }
+
       </Card.Body>
     </Card>
   );
