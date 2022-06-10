@@ -5,6 +5,7 @@ import NumberFormat from "react-number-format";
 import "./style.css";
 import { Link } from "react-router-dom";
 import { BsStar, BsStarFill } from "react-icons/bs";
+import { BsCartPlus} from "react-icons/bs";
 import SAlert from "react-s-alert";
 import Rating from "react-rating";
 import CartApi from "../../api/cart";
@@ -43,26 +44,33 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
   };
 
   return (
-    <Card className="product-card p-2" key={product.id}>
+    <Card className="product-card" key={product.id}>
       <Link to={`/products/${product.id}`}>
-        <Card.Img style={{ cursor: "pointer" }} variant="top" src={getImageOfficial()} />
+        <Card.Img
+          style={{ cursor: "pointer" }}
+          variant="top"
+          src={getImageOfficial()}
+          className="product-card_img"
+        />
       </Link>
       <Card.Body className="p-2">
-        <Link to={`/products/${product.id}`}>
-          <h3 style={{ cursor: "pointer" }}>{product.name}</h3>
+        <Link to={`/products/${product.id}`} className="product-card_link">
+          <h3 className="product-card_title" style={{ cursor: "pointer" }}>{product.name}</h3>
         </Link>
-        <Card.Text></Card.Text>
         <h5>
           <NumberFormat
             value={
               Math.round(
-                (product.price - (product.price * product.discount) / 100) / 10000
+                (product.price - (product.price * product.discount) / 100) /
+                  10000
               ) * 10000
             }
             thousandSeparator={true}
             suffix="đ"
             displayType="text"
-          />{" "}
+          />
+        </h5>
+        <h5 className="old-price_container">
           {product.discount !== 0 && (
             <React.Fragment>
               <NumberFormat
@@ -76,7 +84,7 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
             </React.Fragment>
           )}
         </h5>
-        <div style={{ minHeight: "30px" }}>
+        <div style={{ minHeight: "30px", marginBottom:"10px", marginTop:"5px" }}>
           {product.reviewCount > 0 && (
             <>
               <Rating
@@ -85,7 +93,7 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
                 fullSymbol={<BsStarFill color="#fb7234" />}
                 readonly
               />{" "}
-              <span style={{ color: "#fb7234" }}>{product.reviewCount}</span>
+              {/* <span style={{ color: "#fb7234" }}>{product.reviewCount}</span> */}
             </>
           )}
         </div>
@@ -94,15 +102,15 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
             <Button
               as={Link}
               to={`/admin/edit-product/${product.id}`}
-              className="mb-2"
-              variant="success"
+              className="mb-2 product-btn-update"
+              variant="primary"
             >
               Chỉnh sửa
             </Button>
             <Button
               variant="danger"
               onClick={() => setOpenDeleteDialog(true)}
-              className="mb-2"
+              className="mb-2 product-btn-delete"
               size="sm"
             >
               Xóa
@@ -116,12 +124,11 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
             />
           </ButtonGroup>
         )}
-
-        {enableBtnAddToCard && isAuth && (
-          <Button onClick={addToCart} variant="primary">
-            Thêm vào giỏ hàng
-          </Button>
-        )}
+        {!isAdmin && isAuth && (
+          <Button onClick={addToCart} variant="success" className="addCart-btn">
+            Thêm vào giỏ hàng <BsCartPlus/>
+          </Button>)
+        }
       </Card.Body>
     </Card>
   );

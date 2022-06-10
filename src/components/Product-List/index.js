@@ -5,6 +5,7 @@ import ProductApi from "../../api/product";
 import SAlert from "react-s-alert";
 import PropTypes from "prop-types";
 import "./style.css";
+import "../../parts/Home/homeStyle.css"
 import LoadingIndicator from "../LoadingIndicator";
 
 const ProductList = (props) => {
@@ -55,12 +56,12 @@ const ProductList = (props) => {
   }
 
   return productList.length > 0 ? (
-    <>
+    <div className="container product-products">
       <Row>
         {productList.map((product) => (
-          <Col md="3" key={product.id}>
+          <Col md="3" key={product.id} >
             <ProductView
-              enableBtnAddToCard={props.enableBtnAddToCard}
+              // enableBtnAddToCard={props.enableBtnAddToCard}
               isAdmin={props.isAdmin}
               product={product}
               isAuth={props.isAuth}
@@ -71,7 +72,7 @@ const ProductList = (props) => {
       {/* {props.enablePagination && (
         
       )} */}
-    </>
+    </div>
   ) : (
     <Row className="justify-content-center">
       <Col md="12" className="text-center mb-4">

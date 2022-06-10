@@ -1,0 +1,102 @@
+.slider-container{
+    background-image: url(./Banner.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 630px;
+    padding: 250px 100px 100px;
+}
+.home-product_container{
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 50px;
+}
+.home-product-title
+{
+    font-size: 24px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 700;
+    color: #f21717;
+    margin-left: 10px;
+}
+.green{
+    color: green;
+}
+.home-product-title_icon
+{
+    margin-left: 5px;
+}
+.home-product_more{
+    margin-top: 30px;
+    margin-right: 10px;
+    text-align: right;
+}
+.home-product_more__content{
+    color: green !important;
+    margin-right:10px !important;
+    font-size: 16px;
+    font-weight: 600;
+}
+.home-product_banner__laptop{
+    background-image: url(./Banner_laptop.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin-bottom: 20px;
+}
+.home-product_banner__smartphone{
+    background-image: url(./banner-iphone.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin-bottom: 20px;
+    margin-top: -10px;
+}
+.home-recommend{
+    background-image: url(./recommend_register.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 250px;
+    padding: 60px 0 0 0;
+    text-align: center;
+}
+.home-recommend p{
+    font-size: 40px;
+    font-weight: 800;
+    color:#fff;
+}
+.home-recommend .home-recommend_btn .home-recommend_link{
+    color: #fff;
+    font-weight: 600;
+    font-size: 20px;
+}
+.home-recommend .home-recommend_btn{
+    background-color: #ac47aa;
+    color: #fff;
+    font-weight: 600;
+    font-size: 20px;
+    padding:10px 30px;
+    border-radius: 10px;
+    border: none;
+}
+.home-recommend .home-recommend_btn:hover {
+    transform: scale(1.08);
+    transition: all 0.5s ease-in-out;
+}
+.home-recommend .home-recommend_btn:hover .home-recommend_link{
+    text-decoration: none;
+}
+

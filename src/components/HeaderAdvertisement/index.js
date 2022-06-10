@@ -1,15 +1,16 @@
 import React from "react";
 import { Carousel, Row, Col, Image } from "react-bootstrap";
-
+import "./advertisement.css";
 const HeaderAdvertisement = ({ sliderList, bannerList }) => {
   return (
-    <Row>
-      <Col xs="8">
+    <div className="Advertisement">
+      <Row>
+      <Col xs="7">
         {sliderList.length > 0 && (
-          <Carousel>
+          <Carousel className="slider-adv-container">
             {sliderList.map((slide) => {
               return (
-                <Carousel.Item interval={500000} key={slide.id}>
+                <Carousel.Item interval={2000} key={slide.id} className="slider-item">
                   <a href={slide.linkTo}>
                     <img
                       className="d-block w-100 objectf"
@@ -18,8 +19,8 @@ const HeaderAdvertisement = ({ sliderList, bannerList }) => {
                       alt={slide.title}
                     />
                   </a>
-                  <Carousel.Caption className="bg-light p-2">
-                    <h3 className="text-dark mb-0">{slide.title}</h3>
+                  <Carousel.Caption className="p-2 slider-item-title">
+                    <h3 className=" mb-0">{slide.title}</h3>
                   </Carousel.Caption>
                 </Carousel.Item>
               );
@@ -27,20 +28,19 @@ const HeaderAdvertisement = ({ sliderList, bannerList }) => {
           </Carousel>
         )}
       </Col>
-      <Col xs="4">
-        <Row noGutters>
+      <Col xs="5" className="banner-adv-container">
           {bannerList.map((banner) => {
             return (
-              <Col xs="6" className="p-1" key={banner.id}>
+              <Col  className="banner-adv-item" key={banner.id}>
                 <a href={banner.linkTo}>
-                  <Image src={banner.url} alt={banner.title} className="d-block w-100" />
+                  <Image src={banner.url} alt={banner.title} className="banner-adv-item_img" />
                 </a>
               </Col>
             );
           })}
-        </Row>
       </Col>
     </Row>
+    </div>
   );
 };
 

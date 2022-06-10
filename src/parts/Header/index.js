@@ -1,17 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineHome } from "react-icons/ai";
+import { MdOutlineLaptopMac } from "react-icons/md";
+import { MdManageAccounts } from "react-icons/md";
+import { GiSmartphone } from "react-icons/gi";
+import { BsCart3 } from "react-icons/bs";
+import { TbLogout } from "react-icons/tb";
+import { ImProfile } from "react-icons/im";
+
+import "./style.css";
 
 const Header = ({ currentUser, isAdmin, logOut }) => {
+  const [showSubNav, setShowSubNav] = useState(false);
+  console.log(showSubNav);
+  const show = () => {
+    setShowSubNav(!showSubNav);
+  };
+  const handleLogout = () =>{
+    logOut();
+    setShowSubNav(false);
+  }
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar
+      collapseOnSelect
+      expand="lg"
+      variant="dark"
+      className="navBar-container"
+    >
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Brand>
         <Nav.Link
           as={NavLink}
           activeClassName="active"
-          className="text-light font-weight-bold"
+          className="font-weight-bold navBar-item navBar-item_title"
           to="/"
         >
           DDNK
@@ -20,47 +42,71 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
       <Navbar.Collapse>
         <Nav>
           <Nav.Item>
-            <Nav.Link as={NavLink} activeClassName="active" to="/home">
+            <Nav.Link
+              as={NavLink}
+              activeClassName="active"
+              to="/home"
+              className="navBar-item"
+            >
+              <AiOutlineHome className="navBar-item_icon" />
               Trang chủ
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link as={NavLink} activeClassName="active" to="/smartphone">
+            <Nav.Link
+              as={NavLink}
+              activeClassName="active"
+              to="/smartphone"
+              className="navBar-item"
+            >
+              <GiSmartphone className="navBar-item_icon" />
               Điện Thoại
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link as={NavLink} activeClassName="active" to="/laptop">
+            <Nav.Link
+              as={NavLink}
+              activeClassName="active"
+              to="/laptop"
+              className="navBar-item"
+            >
+              <MdOutlineLaptopMac className="navBar-item_icon" />
               Laptop
             </Nav.Link>
           </Nav.Item>
           {isAdmin && (
             <>
               <Nav.Item>
-                <Nav.Link as={NavLink} activeClassName="active" to="/admin/add-product">
+                <Nav.Link
+                  as={NavLink}
+                  activeClassName="active"
+                  to="/admin/add-product"
+                  className="navBar-item"
+                >
+                  <MdManageAccounts className="navBar-item_icon" />
                   Quản lý
                 </Nav.Link>
               </Nav.Item>
               {/* <Nav.Item>
-                <Nav.Link as={NavLink} activeClassName="active" to="/admin/add-product">
-                  Thêm Sản Phẩm
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link as={NavLink} activeClassName="active" to="/admin/user-accounts">
-                  QL Tài Khoản
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link as={NavLink} activeClassName="active" to="/admin/orders">
-                  QL Đơn Hàng
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link as={NavLink} activeClassName="active" to="/admin/header-image">
-                  QL Quảng Cáo
-                </Nav.Link>
-              </Nav.Item> */}
+            <Nav.Link as={NavLink} activeClassName="active" to="/admin/add-product">
+              Thêm Sản Phẩm
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link as={NavLink} activeClassName="active" to="/admin/user-accounts">
+              QL Tài Khoản
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link as={NavLink} activeClassName="active" to="/admin/orders">
+              QL Đơn Hàng
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link as={NavLink} activeClassName="active" to="/admin/header-image">
+              QL Quảng Cáo
+            </Nav.Link>
+          </Nav.Item> */}
             </>
           )}
         </Nav>
@@ -71,32 +117,70 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
                 as={NavLink}
                 activeClassName="active"
                 to="/cart"
-                className="relative"
+                className="relative navBar-item"
               >
                 Giỏ Hàng
-                <AiOutlineShoppingCart size="30px" />
+                <BsCart3 className="navBar-item_icon" />
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link as={NavLink} activeClassName="active" to="/profile">
-                {currentUser.name}
+              <Nav.Link
+                // as={NavLink}
+                // activeClassName="active"
+                // to="/profile"
+                className="navBar-item"
+                onClick={show}
+              >
+                <img
+                  className="navBar-item_avt"
+                  src={currentUser.avatarUrl}
+                  alt={currentUser.name}
+                />
               </Nav.Link>
+              <div
+                className={
+                  showSubNav
+                    ? "navBar-item_subNav active-subnav"
+                    : "navBar-item_subNav"
+                }
+              >
+                <p className="navBar-item_subNav__userName">
+                  <b>{currentUser.name}</b>
+                </p>
+                <Link className="navBar-item_subNav__item" to="/profile">
+                  <ImProfile className="icon" />
+                  Trang cá nhân
+                </Link>
+                <Link
+                  className="navBar-item_subNav__item"
+                  to="/login"
+                  onClick={handleLogout}
+                >
+                  <TbLogout className="icon" />
+                  Đăng xuất
+                </Link>
+              </div>
             </Nav.Item>
-            <Nav.Item>
-              <Nav.Link as={Link} to="/login" onClick={() => logOut()}>
-                Đăng xuất
-              </Nav.Link>
-            </Nav.Item>
+            {/* <Nav.Item>
+          <Nav.Link
+            as={Link}
+            to="/login"
+            className="navBar-item"
+            onClick={() => logOut()}
+          >
+            Đăng xuất
+          </Nav.Link>
+        </Nav.Item> */}
           </Nav>
         ) : (
           <Nav className="ml-auto">
             <Nav.Item>
-              <Nav.Link as={Link} to="/login">
+              <Nav.Link as={Link} to="/login" className="navBar-item">
                 Đăng nhập
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link as={Link} to="/signup">
+              <Nav.Link as={Link} to="/signup" className="navBar-item">
                 Đăng ký
               </Nav.Link>
             </Nav.Item>
