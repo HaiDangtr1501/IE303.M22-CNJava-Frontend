@@ -1,5 +1,9 @@
-import React, { useEffect, useState } from "react";
+
+import React, { useEffect, useState, memo } from "react";
+import { Row, Col, Alert } from "react-bootstrap";
+
 import { Link } from "react-router-dom";
+
 import SAlert from "react-s-alert";
 import ProductList from "../../components/Product-List";
 import HeaderAdvertisement from "../../components/HeaderAdvertisement";
@@ -10,12 +14,15 @@ import { BsChevronRight } from "react-icons/bs";
 import { BsCartPlus } from "react-icons/bs";
 
 
+const Home = ({ isAdmin, isAuthentication }) => {
+
+
 import "./homeStyle.css";
 
-const Home = ({ isAdmin,currentUser}) => {
+
   const [sliderList, setSliderList] = useState([]);
   const [bannerList, setBannerList] = useState([]);
-
+  console.log("check auth home", isAuthentication)
   useEffect(() => {
     const getHeaderImage = async () => {
       try {
@@ -58,7 +65,7 @@ const Home = ({ isAdmin,currentUser}) => {
             <p>LAPTOP HOT <ImFire className="home-product-title_icon"/></p>
           </div>
           <div className="home-product-products">
-            {<ProductList isAdmin={isAdmin} size={4} category="Laptop" />}
+            {<ProductList isAdmin={isAdmin} size={4} isAuth={isAuthentication} category="Laptop" />}
           </div>
           <div className="home-product_more">
             <Link to="/laptop" className="home-product_more__content">Xem thêm...</Link>
@@ -71,7 +78,7 @@ const Home = ({ isAdmin,currentUser}) => {
             <p>New SmartPhone<MdOutlineSmartphone className="home-product-title_icon"/></p>
           </div>
           <div className="home-product-products">
-            {<ProductList isAdmin={isAdmin} size={4} category="SmartPhone" />}
+            {<ProductList isAdmin={isAdmin} isAuth={isAuthentication} size={4} category="SmartPhone" />}
           </div>
           <div className="home-product_more">
             <Link to="/smartphone" className="home-product_more__content">Xem thêm...</Link>
@@ -89,4 +96,4 @@ const Home = ({ isAdmin,currentUser}) => {
     </div>
   );
 };
-export default Home;
+export default memo(Home);

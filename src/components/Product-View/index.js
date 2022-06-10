@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback, useMemo, memo,useRef } from "react";
 import { Card, Badge, Button, ButtonGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
 import NumberFormat from "react-number-format";
@@ -13,24 +13,111 @@ import YesNoQuestion from "../Dialog/YesNoQuestion";
 import ProductApi from "../../api/product";
 
 const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
+  console.log("product", product);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [checkQuantity, setCheckQuantity] = useState(false);
+  // const dataLocalProduct = useRef([])
+  
 
+  // const [listItem, setListItem] = useState([]);
+  console.log("product view", isAuth)
   const getImageOfficial = () => {
     const official = product.images.find(({ type }) => type === "Official");
     return official.url;
   };
-  console.log("product id: ", product)
+ 
   const addToCart = async () => {
-    try {
-      const response = await CartApi.addProduct(product.id);
-      if (response.status === 200) {
-        SAlert.success(response.data);
+    if(!isAuth){
+      let localCarts = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
+      let productCart = {
+        id: product.id,
+        discount: product.discount,
+        images: product.images[0],
+        name: product.name,
+        price: product.price,
+        quantity: 1,
+        stock: product.quantity,
+
       }
-    } catch (error) {
-      SAlert.error(error.response.data.message);
+      // if(localCarts[0] === undefined) {
+      //   productCart.quantity--;
+      //   localCarts.push(productCart);
+      // }  
+      let flag = false
+      for (let i = 0; i < localCarts.length; i++){
+        // SAlert.success(`Thêm thành công sản phẩm ${localCarts[i].name} vào giỏ hàng`)
+        if(localCarts[i].name === productCart.name){
+          
+          if(localCarts[i].quantity + 1 > localCarts[i].stock){
+            SAlert.error("Không đủ sản phẩm")
+            setCheckQuantity(true)
+            
+          }else{
+            SAlert.success(`Thêm thành công ${localCarts[i].quantity + 1} sản phẩm ${localCarts[i].name} vào giỏ hàng`)
+            localCarts[i].quantity++;
+
+          }
+          flag = true;
+          break;
+        }
+      }
+      if(!flag){
+        SAlert.success(`Thêm thành công vào giỏ hàng`)
+        localCarts.push(productCart);
+      }
+      localStorage.setItem("products", JSON.stringify(localCarts));
+      
+      
+      
+    }else{
+      try {
+        const response = await CartApi.addProduct(product.id);
+        if (response.status === 200) {
+          SAlert.success(response.data);
+        }
+        
+      } catch (error) {
+        SAlert.error(error.response.data.message);
+      }
     }
   };
-
+  // useMemo(()=>{
+  //   if(!isAuth){
+  //     if (!localStorage.getItem("products")) {
+  //       localStorage.setItem("products", "[]");
+  //     }
+  //     dataLocalProduct.current = JSON.parse(localStorage.getItem("products"))
+  //     // for (let i = 0; i < dataLocalProduct.current.length; i++){
+  //     //   if(dataLocalProduct.current[i].quantity === dataLocalProduct.current[i].stock){
+  //     //     // dataType.current = dataLocalProduct[i].id
+  //     //     console.log("id", dataLocalProduct.current[i].id)
+  //     //   }
+  //     // }
+  //     // dataLocalProduct.map((data) => {
+  //     //   if(data.quantity === data.stock){
+  //     //     setCheckQuantity(true)
+  //     //   }
+  //     //   console.log("data", data.name)
+  //     //   return { ...data };
+  //     // })
+  //   }
+  // },[])
+  
+  // useEffect(()=>{
+  //   const getCart = async () => {
+  //     const response = await CartApi.getCart();
+  //     setListItem(response.data)
+      
+  //   }
+  //   getCart();
+  // },[])
+  
+  // listItem.map((item) => {
+  //   if(item.productName == product.name){
+  //     setCheckItem(true)
+  //   }
+    
+  // })
   const handleDeleteProduct = async () => {
     setOpenDeleteDialog(false);
     try {
@@ -46,7 +133,7 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
   const resolve = Math.round(
     (product.price - (product.price * product.discount) / 100) / 10000
   ) * 10000
-  console.log(resolve);
+  
   return (
     <Card className="product-card" key={product.id}>
       <Link to={`/products/${product.id}`}>
@@ -99,11 +186,13 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
             <>
               <Rating
                 initialRating={product.rating}
-                emptySymbol={<BsStar color="#fb7234" />}
-                fullSymbol={<BsStarFill color="#fb7234" />}
+                emptySymbol={<BsStar color="#FADB14" />}
+                fullSymbol={<BsStarFill color="#FADB14" />}
                 readonly
               />{" "}
-              {/* <span style={{ color: "#fb7234" }}>{product.reviewCount}</span> */}
+
+              <span style={{ color: "#FADB14" }}>{product.reviewCount}</span>
+
             </>
           )}
         </div>
@@ -134,11 +223,41 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
             />
           </ButtonGroup>
         )}
-        {!isAdmin && isAuth && (
-          <Button onClick={addToCart} variant="success" className="addCart-btn">
-            Thêm vào giỏ hàng <BsCartPlus/>
-          </Button>)
-        }
+
+        {/* {
+        (checkItem) && (
+          <Button variant="danger">
+            Đã thêm vào giỏ hàng
+          </Button>
+        )
+    } */}
+        
+        {!isAdmin  &&(
+          checkQuantity ? (
+            <Button disabled={checkQuantity} variant="danger" id="buttonAddCart">
+              Thêm giỏ hàng
+            </Button>
+          ):(
+            <Button disabled={checkQuantity} variant="primary" onClick={addToCart} id="buttonAddCart">
+              Thêm giỏ hàng
+            </Button>
+          )
+         
+                
+        )}
+        <Button variant="danger" id="buttonDoneAddCart" className="buttonCart">
+            Đã thêm vào giỏ hàng
+        </Button>
+        {/* {flag ? (
+          <Button variant="danger"  >
+          Đã thêm vào giỏ hàng
+        </Button>
+        ):(
+          <Button variant="primary" onClick={addToCart} >
+            Thêm giỏ hàng
+          </Button>
+        )}
+         */}
 
       </Card.Body>
     </Card>
@@ -173,4 +292,4 @@ ProductView.propTypes = {
   }),
 };
 
-export default ProductView;
+export default memo(ProductView);

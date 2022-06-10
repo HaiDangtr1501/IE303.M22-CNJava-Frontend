@@ -17,6 +17,7 @@ import OAuth2RedirectHandler from "./components/OAuth2RedirectHandler";
 import PrivateRoute from "./components/PrivateRoute";
 import Error from "./components/Error";
 import SaveProduct from "./components/SaveProduct";
+import LayoutLoginSignup from "./components/LayoutLoginSignup/LayoutLoginSignup"
 
 import Header from "./parts/Header";
 import Footer from "./parts/Footer";
@@ -116,9 +117,11 @@ const App = () => {
           <Route
             exact
             path={["/", "/home"]}
-            render={(props) => <Home isAdmin={isAdmin} currentUser={currentUser} {...props} />}
+
+            render={(props) => <Home isAdmin={isAdmin} isAuthentication={authenticated} {...props} />}
+
           />
-          <Route
+          {/* <Route
             path={"/login"}
             render={(props) => (
               <Login
@@ -134,8 +137,30 @@ const App = () => {
             render={(props) => (
               <Signup isAuthentication={authenticated} {...props} />
             )}
+          ></Route> */}
+          <Route
+            path="/login"
+            render={(props) => (
+              <LayoutLoginSignup  
+                onLocalLogin={loginHandler}
+                isAuthentication={authenticated}
+                loading={authLoading}
+                {...props}
+              />
+            )}
+          >
+          </Route>
+          <Route
+            path="/cart"
+            render={(props) => (
+              <CartPage  
+                
+                isAuthentication={authenticated}
+                currentUser={currentUser}
+                {...props}
+              />
+            )}
           ></Route>
-
           {!authLoading && (
             <PrivateRoute
               path="/profile"
@@ -145,14 +170,14 @@ const App = () => {
               component={Profile}
             ></PrivateRoute>
           )}
-          {!authLoading && (
+          {/* {!authLoading && (
             <PrivateRoute
               path="/cart"
               authenticated={authenticated}
               currentUser={currentUser}
               component={CartPage}
             ></PrivateRoute>
-          )}
+          )} */}
           {/* <Route
             exact
             path="/smart-phone"

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import { Col, Row } from "react-bootstrap";
 import ProductView from "../Product-View";
 import ProductApi from "../../api/product";
@@ -13,7 +13,6 @@ const ProductList = (props) => {
   const [page, setPage] = useState(props.page);
   const [totalPage, setTotalPage] = useState();
   const [loading, setLoading] = useState(false);
-  
   useEffect(() => {
     setLoading(true);
     const getProductData = async () => {
@@ -54,7 +53,7 @@ const ProductList = (props) => {
   if (loading) {
     return <LoadingIndicator />;
   }
-
+  // console.log("check props product list", props)
   return productList.length > 0 ? (
     <div className="container product-products">
       <Row>
@@ -116,4 +115,4 @@ ProductList.propTypes = {
   minPrice: PropTypes.number,
 };
 
-export default ProductList;
+export default memo(ProductList);

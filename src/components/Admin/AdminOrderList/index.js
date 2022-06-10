@@ -45,7 +45,7 @@ const AdminOrderList = () => {
       clearTimeout(timeOut);
     };
   }, [search]);
-  console.log(search);
+
 
   return (
     <>
