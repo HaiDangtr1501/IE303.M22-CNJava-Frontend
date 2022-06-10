@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import { Row, Col, Alert } from "react-bootstrap";
 import SAlert from "react-s-alert";
 import ProductList from "../../components/Product-List";
 import HeaderAdvertisement from "../../components/HeaderAdvertisement";
 import HeaderImageApi from "../../api/header-image";
 
-const Home = ({ isAdmin }) => {
+const Home = ({ isAdmin, isAuthentication }) => {
   const [sliderList, setSliderList] = useState([]);
   const [bannerList, setBannerList] = useState([]);
-
+  console.log("check auth home", isAuthentication)
   useEffect(() => {
     const getHeaderImage = async () => {
       try {
@@ -44,7 +44,7 @@ const Home = ({ isAdmin }) => {
           </Alert>
         </Col>
       </Row>
-      {<ProductList isAdmin={isAdmin} size={4} category="Laptop" />}
+      {<ProductList isAdmin={isAdmin} isAuth={isAuthentication} size={4} category="Laptop" />}
 
       <Row className="mt-4">
         <Col>
@@ -53,8 +53,8 @@ const Home = ({ isAdmin }) => {
           </Alert>
         </Col>
       </Row>
-      {<ProductList isAdmin={isAdmin} size={4} category="SmartPhone" />}
+      {<ProductList isAdmin={isAdmin} isAuth={isAuthentication} size={4} category="SmartPhone" />}
     </div>
   );
 };
-export default Home;
+export default memo(Home);

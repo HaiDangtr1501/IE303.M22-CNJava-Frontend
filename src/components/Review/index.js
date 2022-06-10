@@ -18,6 +18,7 @@ const Review = ({ closeButton, review }) => {
           emptySymbol={<BsStar />}
           fullSymbol={<BsStarFill />}
           readonly
+          style={{color: "#FADB14"}}
         />
         <br />
         <p className="mb-0" style={{ fontSize: "20px" }}>

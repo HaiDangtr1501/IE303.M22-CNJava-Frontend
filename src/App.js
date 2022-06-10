@@ -116,7 +116,7 @@ const App = () => {
           <Route
             exact
             path={["/", "/home"]}
-            render={(props) => <Home isAdmin={isAdmin} {...props} />}
+            render={(props) => <Home isAdmin={isAdmin} isAuthentication={authenticated} {...props} />}
           />
           {/* <Route
             path={"/login"}
@@ -146,8 +146,18 @@ const App = () => {
               />
             )}
           >
-
           </Route>
+          <Route
+            path="/cart"
+            render={(props) => (
+              <CartPage  
+                
+                isAuthentication={authenticated}
+                currentUser={currentUser}
+                {...props}
+              />
+            )}
+          ></Route>
           {!authLoading && (
             <PrivateRoute
               path="/profile"
@@ -157,14 +167,14 @@ const App = () => {
               component={Profile}
             ></PrivateRoute>
           )}
-          {!authLoading && (
+          {/* {!authLoading && (
             <PrivateRoute
               path="/cart"
               authenticated={authenticated}
               currentUser={currentUser}
               component={CartPage}
             ></PrivateRoute>
-          )}
+          )} */}
           {/* <Route
             exact
             path="/smart-phone"
