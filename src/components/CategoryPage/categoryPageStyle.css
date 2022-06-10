@@ -1,0 +1,37 @@
+.CategoryPage-container{
+    background-color:#f8f9fa;
+}
+.slider-container_laptop{
+        background-image: url(./Banner_laptopPage.png);
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        width: 100%;
+        height: 300px;
+        padding: 250px 100px 100px;
+        margin-bottom: 50px;
+}
+.slider-container_smartphone{
+    background-image: url(./Banner_smartphonePage.png);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 300px;
+    padding: 250px 100px 100px;
+    margin-bottom: 50px;
+}
+.product-search_form
+{
+    box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 20px 10px;
+}
+.product-show{ 
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 10px 10px 0 10px;
+    margin-top: 20px;
+}
