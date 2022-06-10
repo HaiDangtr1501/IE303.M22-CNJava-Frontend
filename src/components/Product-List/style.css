@@ -1,3 +1,9 @@
 .product-list-pagination .pagination {
   justify-content: center;
 }
+.product-products
+{
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 50px;
+}

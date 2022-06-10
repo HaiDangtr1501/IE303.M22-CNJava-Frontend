@@ -71,7 +71,7 @@ const CategoryPage = ({ size, isAuth, type, isAdmin }) => {
   };
 
   return (
-    <>
+    <div className="container mt-3">
       <Form.Row className="justify-content-between">
         <Form.Group as={Col} md="6" controlId="formSearch">
           <Form.Label>
@@ -146,7 +146,7 @@ const CategoryPage = ({ size, isAuth, type, isAdmin }) => {
           />
         </Col>
       </Row>
-    </>
+    </div>
   );
 };
 

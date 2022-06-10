@@ -1,0 +1,78 @@
+.navBar-container{
+    padding: 5px 80px;
+    background-color: rgb(242, 248, 252);
+    position: sticky;
+    top: 0px;
+    z-index: 1040;
+    box-shadow: rgba(0, 2, 18, 0.1) 0px 0.5rem 1rem 0px;
+}
+.navBar-item{
+    color: rgb(130, 134, 158) !important;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.5s ease-in-out;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.navBar-item:hover{
+    color: rgb(13, 110, 253) !important;
+    font-weight: 400;
+    transform: scale(1.08);
+}
+.active
+{
+    color: rgb(13, 110, 253)!important;
+}
+.navBar-item_title {
+    font-size: 24px;
+}
+.navBar-item_icon{
+    margin-bottom: 5px;
+    font-size: 24px;
+}
+.navBar-item_avt{
+    position: relative;
+    width:30px;
+    border-radius: 50%;
+    border: 2px solid rgb(13, 110, 253);
+    transition: all 0.5s ease-in-out;
+}
+.navBar-item_avt:hover{
+    transform: scale(1.3); 
+}
+.navBar-item_subNav
+{
+    font-size: 16px;
+    width: 180px;
+    height: 120px;
+    background-color:#fff;
+    padding: 10px 20px;
+    border: 1px solid rgb(13, 110, 253);
+    border-radius: 10px;
+    display: none;
+    position: absolute;
+    right:100px;
+}
+.active-subnav{
+    display: block !important;
+}
+.navBar-item_subNav__item{
+    display: block;
+    color: black;
+    margin: 5px 0;
+}
+.navBar-item_subNav__item:hover{
+    display: block;
+    color: rgb(13, 110, 253);
+    text-decoration: none;
+}
+.navBar-item_subNav__userName{
+    color: rgb(13, 110, 253);
+    border-bottom: 1px solid rgb(13, 110, 253);
+    display: block;
+    margin-bottom: 20px;
+}
+.navBar-item_subNav__item icon{
+    margin-right: 10px;
+    font-size: 50px !important;
+}

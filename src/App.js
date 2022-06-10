@@ -19,6 +19,7 @@ import Error from "./components/Error";
 import SaveProduct from "./components/SaveProduct";
 
 import Header from "./parts/Header";
+import Footer from "./parts/Footer";
 import Home from "./parts/Home";
 import ProductPage from "./components/ProductPage";
 import CartPage from "./components/CartPage";
@@ -110,12 +111,12 @@ const App = () => {
     <div>
       <Header currentUser={currentUser} isAdmin={isAdmin} logOut={logOut} />
 
-      <div className="container mt-3">
+      <div>
         <Switch>
           <Route
             exact
             path={["/", "/home"]}
-            render={(props) => <Home isAdmin={isAdmin} {...props} />}
+            render={(props) => <Home isAdmin={isAdmin} currentUser={currentUser} {...props} />}
           />
           <Route
             path={"/login"}
@@ -318,7 +319,7 @@ const App = () => {
           )}
         </Switch>
       </div>
-
+      <Footer/>        
       <Alert
         stack={{ limit: 3 }}
         timeout={3000}

@@ -7,7 +7,7 @@ import { FaRegCalendarPlus } from "react-icons/fa";
 function SideBarItem(props) {
   return (
     <div className="sideBarItem-container">
-      <Link className="sideBarItem-link" to={props.path}>
+      <Link className="sideBarItem-link" activeClassName="active" to={props.path}>
         <div className="sideBarItem-link_content">
           <p className="sideBarItem-link_title">
             {props.icon}

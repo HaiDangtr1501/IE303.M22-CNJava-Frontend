@@ -1,0 +1,107 @@
+.footer-container
+{
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    color: #000;
+    overflow: hidden;
+    padding:10px 40px;
+    border-top: 1px solid #000;
+}
+.footer-container ul li{
+    list-style-type: none;
+}
+.white{
+    list-style-type: none;
+    color: #000;
+}
+.footer-container_signature
+{
+    width: 30%;
+}
+.footer-container_options{
+    width: 55%;
+}
+.footer-container_signature .logo {
+}
+.footer-container_signature  .logo img{
+    width: 200px;
+}
+.footer-container_signature .brand {
+    margin-top: -50px;
+}
+.footer-container_signature .brand h6{
+    font-size: 30px;
+    font-weight: 600;
+}
+.footer-container_signature  .information{
+    margin-top: 20px;
+}
+.footer-container_signature  .information .icon{
+    font-size: 30px;
+}
+.footer-container_signature  .information .icon:hover{
+    cursor: pointer;
+    color: green;
+}
+.footer-container_signature  .information ul{
+    padding: 0;
+}
+.footer-container_signature  .information ul li{
+    display: inline-block;
+}
+.footer-container_signature  .information ul li:nth-child(2){
+    margin: 0 50px;
+}
+
+.footer-container_options
+{
+    display: flex;
+    margin-top: 40px;
+    font-size: 16px;
+    font-weight: 400;
+}
+.footer-container_options .option:nth-child(2)
+{
+    margin: 0px 60px;
+}
+.footer-container_options h5
+{
+    font-size: 24px;
+    color: #000;
+    font-weight: 600;
+}
+.footer-container_options ul{
+    padding: 0!important;
+}
+.footer-container_options ul li{
+    margin-bottom: 10px;
+}
+.footer-container_options  Link:hover{
+     color:rgb(13, 110, 253);
+     transform: scale(1.08);
+}
+.address-content,.link-list,.support-option{
+    margin-top: 20px;
+}
+
+.website-rights{
+    width: 100%;
+    background-color: #1c1d31;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 300;
+    padding: 10px 0;
+}
+.website-rights-content
+{
+    display: block;
+    text-align: center;
+}
+.address-content_logo{
+    text-align: center;
+}
+.address-content_logo img{
+    width: 60px;
+    
+}
