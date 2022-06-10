@@ -136,13 +136,13 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
               <>
               </>
             )}
-            <Nav.Item>
+            {/* <Nav.Item>
               <Image
                 style={{ width: "2.5rem" }}
                 roundedCircle
                 src={currentUser.avatarUrl || "/img/avatar_default.png"}
               ></Image>
-            </Nav.Item>
+            </Nav.Item> */}
             <Nav.Item>
               <Nav.Link
                 // as={NavLink}
