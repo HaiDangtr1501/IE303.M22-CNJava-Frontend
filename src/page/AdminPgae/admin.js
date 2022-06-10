@@ -8,7 +8,7 @@ function Admin(props) {
             </div>
             <div className="admin-container_page">
                 {props.mainPage}
-            </div>
+            </div>            
         </div>
     );
 }

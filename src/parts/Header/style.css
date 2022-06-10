@@ -1,13 +1,14 @@
 .navBar-container{
     padding: 5px 80px;
-    background-color: rgb(242, 248, 252);
+    background-color: #fff;
     position: sticky;
     top: 0px;
     z-index: 1040;
-    box-shadow: rgba(0, 2, 18, 0.1) 0px 0.5rem 1rem 0px;
+    /* box-shadow: rgba(0, 2, 18, 0.1) 0px 0.5rem 1rem 0px; */
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
 }
 .navBar-item{
-    color: rgb(130, 134, 158) !important;
+    color: #000 !important;
     font-size: 16px;
     font-weight: 600;
     transition: all 0.5s ease-in-out;
@@ -34,7 +35,7 @@
     position: relative;
     width:30px;
     border-radius: 50%;
-    border: 2px solid rgb(13, 110, 253);
+    border: 2px solid #000;
     transition: all 0.5s ease-in-out;
 }
 .navBar-item_avt:hover{
@@ -47,7 +48,7 @@
     height: 120px;
     background-color:#fff;
     padding: 10px 20px;
-    border: 1px solid rgb(13, 110, 253);
+    border: 1px solid #000;
     border-radius: 10px;
     display: none;
     position: absolute;
