@@ -13,7 +13,7 @@ const ProductList = (props) => {
   const [page, setPage] = useState(props.page);
   const [totalPage, setTotalPage] = useState();
   const [loading, setLoading] = useState(false);
-
+  
   useEffect(() => {
     setLoading(true);
     const getProductData = async () => {

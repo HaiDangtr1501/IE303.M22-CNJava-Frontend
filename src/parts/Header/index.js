@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
-import { Navbar, Nav } from "react-bootstrap";
+
+
 import { AiOutlineHome } from "react-icons/ai";
 import { MdOutlineLaptopMac } from "react-icons/md";
 import { MdManageAccounts } from "react-icons/md";
@@ -10,6 +11,10 @@ import { TbLogout } from "react-icons/tb";
 import { ImProfile } from "react-icons/im";
 
 import "./style.css";
+
+import { Navbar, Nav, Image } from "react-bootstrap";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+
 
 const Header = ({ currentUser, isAdmin, logOut }) => {
   const [showSubNav, setShowSubNav] = useState(false);
@@ -22,6 +27,7 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
     setShowSubNav(false);
   }
   return (
+
     <Navbar
       collapseOnSelect
       expand="lg"
@@ -87,6 +93,7 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
                   Quản lý
                 </Nav.Link>
               </Nav.Item>
+
               {/* <Nav.Item>
             <Nav.Link as={NavLink} activeClassName="active" to="/admin/add-product">
               Thêm Sản Phẩm
@@ -107,12 +114,14 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
               QL Quảng Cáo
             </Nav.Link>
           </Nav.Item> */}
+
             </>
           )}
         </Nav>
         {currentUser ? (
           <Nav className="ml-auto">
-            <Nav.Item>
+            {!isAdmin ? (
+              <Nav.Item>
               <Nav.Link
                 as={NavLink}
                 activeClassName="active"
@@ -122,6 +131,17 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
                 Giỏ Hàng
                 <BsCart3 className="navBar-item_icon" />
               </Nav.Link>
+              </Nav.Item>
+            ) : (
+              <>
+              </>
+            )}
+            <Nav.Item>
+              <Image
+                style={{ width: "2.5rem" }}
+                roundedCircle
+                src={currentUser.avatarUrl || "/img/avatar_default.png"}
+              ></Image>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
