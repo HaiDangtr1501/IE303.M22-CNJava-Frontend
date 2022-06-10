@@ -12,14 +12,10 @@ import { ImFire } from "react-icons/im";
 import { MdOutlineSmartphone } from "react-icons/md";
 import { BsChevronRight } from "react-icons/bs";
 import { BsCartPlus } from "react-icons/bs";
-
-
-const Home = ({ isAdmin, isAuthentication }) => {
-
-
 import "./homeStyle.css";
 
 
+const Home = ({ isAdmin, isAuthentication,currentUser }) => {
   const [sliderList, setSliderList] = useState([]);
   const [bannerList, setBannerList] = useState([]);
   console.log("check auth home", isAuthentication)

@@ -50,8 +50,8 @@ const CartPage = (props) => {
   const updatedCart = () => {
     setHasUpdated(true);
   };
-  console.log("auth cart page", dataLocalProduct.current.length)
-  return (listItem.length > 0 || dataLocalProduct.current.length > 0)? (
+  
+  return (listItem.length > 0 )? (
     <>
       <Row className="justify-content-center">
         <Col lg="8">

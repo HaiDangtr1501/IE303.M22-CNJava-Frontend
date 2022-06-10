@@ -148,14 +148,8 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
         <Link to={`/products/${product.id}`} className="product-card_link">
           <h3 className="product-card_title" style={{ cursor: "pointer" }}>{product.name}</h3>
         </Link>
-        <h5>
-          
-
-          />
-        </h5>
+        
         <h5 className="old-price_container">
-
-          />{" "} */}
           {resolve.toLocaleString("vi-VN", {
                       style: "currency",
                       currency: "VND",
