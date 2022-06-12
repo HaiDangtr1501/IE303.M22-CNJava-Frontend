@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo, memo,useRef } from "react";
 import { Card, Badge, Button, ButtonGroup } from "react-bootstrap";
-import PropTypes from "prop-types";
+import PropTypes, { array } from "prop-types";
 import NumberFormat from "react-number-format";
 import "./style.css";
 import { Link } from "react-router-dom";
@@ -11,16 +11,19 @@ import Rating from "react-rating";
 import CartApi from "../../api/cart";
 import YesNoQuestion from "../Dialog/YesNoQuestion";
 import ProductApi from "../../api/product";
-
+import  { useStore,actions } from "../../store";
 const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
-  console.log("product", product);
+
+  const [state, dispatch] = useStore();
+  const {countCartItems} = state;
+  console.log("Duy:" + countCartItems);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [checkQuantity, setCheckQuantity] = useState(false);
   // const dataLocalProduct = useRef([])
   
 
   // const [listItem, setListItem] = useState([]);
-  console.log("product view", isAuth)
+  // console.log("product view", isAuth)
   const getImageOfficial = () => {
     const official = product.images.find(({ type }) => type === "Official");
     return official.url;
@@ -72,14 +75,20 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
     }else{
       try {
         const response = await CartApi.addProduct(product.id);
+        // console.log("duy" + response.data);
         if (response.status === 200) {
           SAlert.success(response.data);
-        }
-        
+        }        
       } catch (error) {
         SAlert.error(error.response.data.message);
+      };
+      try{
+          const countCartItems = await CartApi.getCart();
+          dispatch(actions.addCart(countCartItems.data.length));
       }
+      catch(e){};
     }
+
   };
   // useMemo(()=>{
   //   if(!isAuth){
@@ -134,6 +143,7 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
     (product.price - (product.price * product.discount) / 100) / 10000
   ) * 10000
   
+  
   return (
     <Card className="product-card" key={product.id}>
       <Link to={`/products/${product.id}`}>
@@ -153,8 +163,10 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
           {resolve.toLocaleString("vi-VN", {
                       style: "currency",
                       currency: "VND",
-          })} {" "}
-          {product.discount !== 0 && (
+          })}
+        </h5>
+        <h5>
+        {product.discount !== 0 && (
             <React.Fragment>
               <span
                 className="old-price"
@@ -185,7 +197,7 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
                 readonly
               />{" "}
 
-              <span style={{ color: "#FADB14" }}>{product.reviewCount}</span>
+              {/* <span style={{ color: "#FADB14" }}>{product.reviewCount}</span> */}
 
             </>
           )}

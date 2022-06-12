@@ -77,3 +77,24 @@
     margin-right: 10px;
     font-size: 50px !important;
 }
+.cart-icon{
+    font-size: 16px;
+}
+.container-count{
+    position: relative;
+}
+.cart-content
+{
+    background-color: rgb(239, 76, 11);
+    text-align: center;
+    line-height: 1.4;
+    font-size: 12px;
+    color: #fff;
+    position: absolute;
+    display: block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    top: -8px;
+    right: -12px;
+}

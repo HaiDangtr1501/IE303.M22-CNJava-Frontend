@@ -68,11 +68,11 @@ const CartPage = (props) => {
               <CartItem key={dt.key} onChange={() => updatedCart()} dt={dt} />
           }) 
           )} */}
-          {props.isAuthentication == true && listItem.map((item) => (
+          {props.isAuthentication === true && listItem.map((item) => (
               <CartItem key={item.cartId} onChange={() => updatedCart()} data={item} />
           ))}
 
-          {props.isAuthentication == false && dataLocalProduct.current.map((item) => (
+          {props.isAuthentication === false && dataLocalProduct.current.map((item) => (
               <CartItem key={item.id} onChange={() => updatedCart()} data={item} />
           ))}
 

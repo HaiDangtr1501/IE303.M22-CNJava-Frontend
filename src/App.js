@@ -17,7 +17,7 @@ import OAuth2RedirectHandler from "./components/OAuth2RedirectHandler";
 import PrivateRoute from "./components/PrivateRoute";
 import Error from "./components/Error";
 import SaveProduct from "./components/SaveProduct";
-import LayoutLoginSignup from "./components/LayoutLoginSignup/LayoutLoginSignup"
+import LayoutLoginSignup from "./components/LayoutLoginSignup/LayoutLoginSignup";
 
 import Header from "./parts/Header";
 import Footer from "./parts/Footer";
@@ -37,6 +37,8 @@ import LoadingIndicator from "./components/LoadingIndicator";
 import ListUserPage from "./components/Admin/ListUserPage";
 import SendEmailVerification from "./components/EmailVerificationPage";
 import Admin from "./page/AdminPgae/admin";
+import CartApi from "./api/cart";
+import  { useStore,actions } from "./store";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -44,9 +46,15 @@ const App = () => {
   const [authLoading, setAuthLoading] = useState(true);
   const [hasUpdateCurrentUser, setHasUpdateCurrentUser] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [cartItems, setCartItems] = useState(0);
 
+  const [state, dispatch] = useStore();
+  // const {countCartItems} = state;
   const history = useHistory();
-
+  useEffect (async ()=>{
+     const response = await CartApi.getCart();
+     dispatch(actions.addCart(response.data.length))
+  },[])
   useEffect(() => {
     const token = localStorage.getItem(ACCESS_TOKEN);
 
@@ -110,16 +118,25 @@ const App = () => {
 
   return (
     <div>
-      <Header currentUser={currentUser} isAdmin={isAdmin} logOut={logOut} />
+      <Header
+        currentUser={currentUser}
+        isAdmin={isAdmin}
+        logOut={logOut}
+      />
 
       <div>
         <Switch>
           <Route
             exact
             path={["/", "/home"]}
-
-            render={(props) => <Home isAdmin={isAdmin} isAuthentication={authenticated} currentUser={currentUser} {...props} />}
-
+            render={(props) => (
+              <Home
+                isAdmin={isAdmin}
+                isAuthentication={authenticated}
+                currentUser={currentUser}
+                {...props}
+              />
+            )}
           />
           {/* <Route
             path={"/login"}
@@ -141,20 +158,18 @@ const App = () => {
           <Route
             path="/login"
             render={(props) => (
-              <LayoutLoginSignup  
+              <LayoutLoginSignup
                 onLocalLogin={loginHandler}
                 isAuthentication={authenticated}
                 loading={authLoading}
                 {...props}
               />
             )}
-          >
-          </Route>
+          ></Route>
           <Route
             path="/cart"
             render={(props) => (
-              <CartPage  
-                
+              <CartPage
                 isAuthentication={authenticated}
                 currentUser={currentUser}
                 {...props}
@@ -344,7 +359,7 @@ const App = () => {
           )}
         </Switch>
       </div>
-      <Footer/>        
+      <Footer />
       <Alert
         stack={{ limit: 3 }}
         timeout={3000}
