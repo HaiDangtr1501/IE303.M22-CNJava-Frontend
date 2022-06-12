@@ -16,14 +16,14 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
 
   const [state, dispatch] = useStore();
   const {countCartItems} = state;
-  console.log("Duy:" + countCartItems);
+
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [checkQuantity, setCheckQuantity] = useState(false);
-  // const dataLocalProduct = useRef([])
+  // const dataLocalProduct = useRef(0)
   
 
   // const [listItem, setListItem] = useState([]);
-  // console.log("product view", isAuth)
+
   const getImageOfficial = () => {
     const official = product.images.find(({ type }) => type === "Official");
     return official.url;
@@ -40,6 +40,8 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
         price: product.price,
         quantity: 1,
         stock: product.quantity,
+        enable: true, 
+        key: 1
 
       }
       // if(localCarts[0] === undefined) {
@@ -48,6 +50,7 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
       // }  
       let flag = false
       for (let i = 0; i < localCarts.length; i++){
+        localCarts[i].key++
         // SAlert.success(`Thêm thành công sản phẩm ${localCarts[i].name} vào giỏ hàng`)
         if(localCarts[i].name === productCart.name){
           
@@ -111,7 +114,7 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
   //     // })
   //   }
   // },[])
-  
+
   // useEffect(()=>{
   //   const getCart = async () => {
   //     const response = await CartApi.getCart();
@@ -239,18 +242,38 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
     } */}
         
         {!isAdmin  &&(
+          
           checkQuantity ? (
             <Button disabled={checkQuantity} variant="danger" id="buttonAddCart">
-              Thêm giỏ hàng <BsCartPlus/>
+              Không đủ số lượng <BsCartPlus/>
             </Button>
           ):(
             <Button disabled={checkQuantity} variant="success" onClick={addToCart} id="buttonAddCart">
               Thêm giỏ hàng <BsCartPlus/>
             </Button>
-          )
-         
-                
+          )   
         )}
+        {/* {!isAuth && (
+          dataLocalProduct.current.length > 0 ? (
+            dataLocalProduct.current.map((data) => {
+              if(data.quantity == data.stock){
+                <Button disabled={checkQuantity} variant="success" id="buttonAddCart">
+                  Thêm giỏ hàng <BsCartPlus/>
+                </Button>
+              }else{
+                <Button disabled={checkQuantity} variant="success" onClick={addToCart} id="buttonAddCart">
+                  Thêm giỏ hàng <BsCartPlus/>
+                </Button>
+              }
+            })
+          ): (
+            <Button disabled={checkQuantity} variant="success" onClick={addToCart} id="buttonAddCart">
+              Thêm giỏ hàng <BsCartPlus/>
+            </Button>
+          )
+          
+        )} */}
+
         <Button variant="danger" id="buttonDoneAddCart" className="buttonCart">
             Đã thêm vào giỏ hàng
         </Button>
