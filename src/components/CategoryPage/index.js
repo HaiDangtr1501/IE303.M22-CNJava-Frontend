@@ -7,7 +7,7 @@ import ProductList from "../Product-List";
 import ProductApi from "../../api/product";
 import "./categoryPageStyle.css"
 
-const CategoryPage = ({ size, isAuth, type, isAdmin }) => {
+const CategoryPage = ({ size, isAuth, type, isAdmin}) => {
   const [listBrand, setListBrand] = useState([]);
   const [brand, setBrand] = useState(null);
   const [price, setPrice] = useState({ min: 0, max: null });

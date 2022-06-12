@@ -82,10 +82,6 @@ const CartPage = (props) => {
               <CartItem isAuth={props.isAuthentication} key={item.cartId} onChange={() => updatedCart()} data={item} />
           ))}
 
-          {/* {props.isAuthentication == false && dataLocalProduct.current.map((item) => (
-              <CartItem key={item.id} onChange={() => updatedCart()} data={item} />
-          ))} */}
-
           <div>
             <strong className="cart-total-price">
               Tổng tiền:{" "}

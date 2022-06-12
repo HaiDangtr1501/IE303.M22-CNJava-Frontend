@@ -40,69 +40,80 @@ const ProductPage = ({ isAuth, isAdmin, enableBtnAddToCard }) => {
       clearTimeout(timeOut);
     };
   }, [productId]);
-  console.log("product page:", enableBtnAddToCard)
+  console.log("product page:", enableBtnAddToCard);
   return loading ? (
     <LoadingIndicator />
   ) : (
-    <>
-      <Row className="product-page">
-        {product && (
-          <>
-            <Col md="4">
-              <Card>
-                <Card.Header>HÌNH ẢNH SẢN PHẨM</Card.Header>
-                <ProductView
-                  isAdmin={isAdmin}
-                  enableBtnAddToCard={enableBtnAddToCard}
-                  product={product}
-                  isAuth={isAuth}
-                />
-              </Card>
-            </Col>
-            <Col md="8">
-              <Card>
-                <Card.Header>ĐẶC ĐIỂM NỔI BẬT</Card.Header>
-                <Carousel>
-                  {product.images
-                    .filter(({ type }) => type === "Slider")
-                    .map(({ url }) => (
-                      <Carousel.Item key={url}>
-                        <img src={url} alt={url} />
-                      </Carousel.Item>
-                    ))}
-                </Carousel>
-                <Card.Body>
-                  <Card.Text>{product.description}</Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-          </>
-        )}
-      </Row>
-      <Row className="mt-5">
-        {product && (
-          <Col md="4">
-            <Card>
-              <Card.Header className="text-center badge-info">
-                Cấu hình sản phẩm
-              </Card.Header>
-              {product.categoryName === "Laptop" && (
-                <LaptopDetails details={product.details} />
-              )}
-              {product.categoryName === "SmartPhone" && (
-                <SmartPhoneDetails details={product.details} />
-              )}
-            </Card>
-          </Col>
-        )}
-        <Col md="8">
-          <Alert variant="info">
-            <h4>Đánh giá sản phẩm</h4>
-          </Alert>
-          <ReviewList isAuth={isAuth} closeButton={false} productId={productId} />
-        </Col>
-      </Row>
-    </>
+    <div className="product-page_container">
+      {product && (
+        <Row>
+          <div className="productName">{product.name}</div>
+        </Row>
+      )}
+      <div className="product-main">
+        <Row>
+          {product && (
+            <>
+              <Col md="4">
+                <div className="product-main_product">
+                  <ProductView
+                    isAdmin={isAdmin}
+                    enableBtnAddToCard={enableBtnAddToCard}
+                    product={product}
+                    isAuth={isAuth}
+                  />
+                </div>
+
+                <div className="product-main_information">
+                  <Card>
+                    <Card.Header className="text-center badge-info">
+                      Cấu hình sản phẩm
+                    </Card.Header>
+                    {product.categoryName === "Laptop" && (
+                      <LaptopDetails details={product.details} />
+                    )}
+                    {product.categoryName === "SmartPhone" && (
+                      <SmartPhoneDetails details={product.details} />
+                    )}
+                  </Card>
+                </div>
+              </Col>
+              <Col md="8">
+                <div className="product-main_desc">
+                 
+                    {/* <div className="product-main_desc__title">ĐẶC ĐIỂM NỔI BẬT</div> */}
+                    <Carousel className="product-main_desc__silder">
+                      {product.images
+                        .filter(({ type }) => type === "Slider")
+                        .map(({ url }) => (
+                          <Carousel.Item key={url}>
+                            <img src={url} alt={url} />
+                          </Carousel.Item>
+                        ))}
+                    </Carousel>
+                    <div className="product-main_desc__content">
+                      <h5>Mô tả: </h5>
+                      <p>{product.description}</p>
+                    </div>
+                </div>
+                <div className="product-main_review">
+                  <Alert variant="info">
+                    <h4>Đánh giá sản phẩm</h4>
+                  </Alert>
+                  <div className="product-main_review_content">
+                  <ReviewList
+                    isAuth={isAuth}
+                    closeButton={false}
+                    productId={productId}
+                  />
+                  </div>
+                </div>
+              </Col>
+            </>
+          )}
+        </Row>
+      </div>
+    </div>
   );
 };
 

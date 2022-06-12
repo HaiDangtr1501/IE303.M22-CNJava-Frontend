@@ -1,17 +1,12 @@
 
 import React, { useEffect, useState, memo } from "react";
-import { Row, Col, Alert } from "react-bootstrap";
-
 import { Link } from "react-router-dom";
-
 import SAlert from "react-s-alert";
 import ProductList from "../../components/Product-List";
 import HeaderAdvertisement from "../../components/HeaderAdvertisement";
 import HeaderImageApi from "../../api/header-image";
 import { ImFire } from "react-icons/im";
 import { MdOutlineSmartphone } from "react-icons/md";
-import { BsChevronRight } from "react-icons/bs";
-import { BsCartPlus } from "react-icons/bs";
 import "./homeStyle.css";
 
 

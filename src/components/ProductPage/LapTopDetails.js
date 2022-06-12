@@ -1,9 +1,10 @@
 import React from "react";
 import { Table } from "react-bootstrap";
+import "./style.css"
 
 const SmartPhoneDetails = ({ details }) => {
   return (
-    <Table striped bordered>
+    <Table striped bordered className="table-custom">
       <tbody>
         <tr>
           <td>Màn Hình</td>
@@ -33,10 +34,10 @@ const SmartPhoneDetails = ({ details }) => {
           <td>Bộ nhớ trong</td>
           <td>{details.internalMemory}</td>
         </tr>
-        <tr>
+        {/* <tr>
           <td>Sim</td>
           <td>{details.sim}</td>
-        </tr>
+        </tr> */}
         <tr>
           <td>Pin, Sạc</td>
           <td>{details.batteryCapacity}</td>

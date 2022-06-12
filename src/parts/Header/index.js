@@ -1,33 +1,28 @@
 import React, { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
-
-
 import { AiOutlineHome } from "react-icons/ai";
 import { MdOutlineLaptopMac } from "react-icons/md";
 import { MdManageAccounts } from "react-icons/md";
 import { GiSmartphone } from "react-icons/gi";
-import { BsCart3 } from "react-icons/bs";
 import { TbLogout } from "react-icons/tb";
 import { ImProfile } from "react-icons/im";
-
 import "./style.css";
-
 import { Navbar, Nav, Image } from "react-bootstrap";
-import { AiOutlineShoppingCart } from "react-icons/ai";
-
+import { useStore } from "../../store";
+import Cart from "./cart";
 
 const Header = ({ currentUser, isAdmin, logOut }) => {
   const [showSubNav, setShowSubNav] = useState(false);
-  console.log(showSubNav);
+  const [state, dispatch] = useStore();
+  const { countCartItems } = state;
   const show = () => {
     setShowSubNav(!showSubNav);
   };
-  const handleLogout = () =>{
+  const handleLogout = () => {
     logOut();
     setShowSubNav(false);
-  }
+  };
   return (
-
     <Navbar
       collapseOnSelect
       expand="lg"
@@ -114,7 +109,6 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
               QL Quảng Cáo
             </Nav.Link>
           </Nav.Item> */}
-
             </>
           )}
         </Nav>
@@ -122,19 +116,23 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
           <Nav className="ml-auto">
             {!isAdmin ? (
               <Nav.Item>
-              <Nav.Link
-                as={NavLink}
-                activeClassName="active"
-                to="/cart"
-                className="relative navBar-item"
-              >
-                Giỏ Hàng
+                <Nav.Link
+                  as={NavLink}
+                  activeClassName="active"
+                  to="/cart"
+                  className="relative navBar-item"
+                >
+                  {/* Giỏ Hàng 
                 <BsCart3 className="navBar-item_icon" />
-              </Nav.Link>
+                {localStorage.getItem("countCartItems")} */}
+                  <Cart
+                    currentUser={currentUser}
+                    countCartItems={countCartItems}
+                  />
+                </Nav.Link>
               </Nav.Item>
             ) : (
-              <>
-              </>
+              <></>
             )}
             {/* <Nav.Item>
               <Image

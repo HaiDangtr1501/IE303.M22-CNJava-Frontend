@@ -4,21 +4,31 @@ import { MdDelete } from "react-icons/md";
 import SAlert from "react-s-alert";
 import NumberFormat from "react-number-format";
 import CartApi from "../../api/cart";
+import { useStore, actions } from "../../store";
 
 const CartItem = ({ isAuth,data, onChange }) => {
   const [enable, setEnable] = useState(data.enable);
   const [quantity, setQuantity] = useState(data.quantity);
   const [hasUpdate, setHasUpdate] = useState(false);
+
+  const [state, dispatch] = useStore();
+  const { countCartItems } = state;
+
   const dataLocalProduct = useRef(0)
   
   const [quantityLocal, setQuantitylocal] = useState(data.quantity); // Xử lý quantity cho người dùng khách
   const checkEnabledLocal = useRef(data.enable)
 
+
   
   useEffect(() => {
     const updateCartItem = async () => {
       try {
-        const response = await CartApi.updateItem(data.cartId, quantity, enable);
+        const response = await CartApi.updateItem(
+          data.cartId,
+          quantity,
+          enable
+        );
         if (response.status === 200) {
           onChange();
         }
@@ -84,6 +94,10 @@ const CartItem = ({ isAuth,data, onChange }) => {
     } catch (error) {
       SAlert.error(error.response.data.message);
     }
+    try {
+      const countCartItems = await CartApi.getCart();
+      dispatch(actions.addCart(countCartItems.data.length));
+    } catch (e) {}
     setHasUpdate(true);
   };
 
