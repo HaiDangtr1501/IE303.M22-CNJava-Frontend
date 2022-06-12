@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Alert, Row, Col, Button } from "react-bootstrap";
 import { FaCartPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -7,11 +7,16 @@ import CartApi from "../../api/cart";
 import CartItem from "../CartItem";
 import "./style.css";
 
-const CartPage = () => {
+const CartPage = (props) => {
   const [listItem, setListItem] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [hasUpdated, setHasUpdated] = useState(false);
-
+  const dataLocalProduct = useRef(0)
+  const totalPriceLocal = useRef(0)
+  
+  const [hasUpdatedLocal, setHasUpdateLocal] = useState(false);
+  
+  
   useEffect(() => {
     const getCart = async () => {
       const response = await CartApi.getCart();
@@ -30,34 +35,65 @@ const CartPage = () => {
       }
       setListItem(response.data);
     };
-
-    setHasUpdated(false);
     getCart();
+    setHasUpdated(false);
+       
   }, [hasUpdated]);
 
+  useEffect(()=>{
+    if(!props.isAuthentication){
+      if (!localStorage.getItem("products")) {
+        localStorage.setItem("products", "[]");
+      }
+      dataLocalProduct.current = JSON.parse(localStorage.getItem("products"))
+      let total = 0
+      for(let i = 0; i < dataLocalProduct.current.length; i++) {
+        if(dataLocalProduct.current[i].enable % 2 !== 0){
+          total = total +  (Math.round(
+            (dataLocalProduct.current[i].price * dataLocalProduct.current[i].quantity * (100 - dataLocalProduct.current[i].discount)) /
+              100 /
+              10000
+          ) * 10000)
+  
+        }
+      }
+      totalPriceLocal.current = total
+      setHasUpdateLocal(false);
+    }
+    
+    
+  },[hasUpdatedLocal])
+  
   const updatedCart = () => {
     setHasUpdated(true);
   };
-
-  return listItem.length > 0 ? (
-    <>
-      <Row className="justify-content-center">
+  const updatedCartLocal = () => {
+    setHasUpdateLocal(true)
+  }
+  return (props.isAuthentication ? (
+    (listItem.length > 0) ? (
+      <>
+        <Row className="justify-content-center">
         <Col lg="8">
           <Alert variant="warning">
             <h4 className="text-center mb-0">GIỎ HÀNG</h4>
           </Alert>
           {listItem.map((item) => (
-            <CartItem key={item.cartId} onChange={() => updatedCart()} data={item} />
+              <CartItem isAuth={props.isAuthentication} key={item.cartId} onChange={() => updatedCart()} data={item} />
           ))}
+
+          {/* {props.isAuthentication == false && dataLocalProduct.current.map((item) => (
+              <CartItem key={item.id} onChange={() => updatedCart()} data={item} />
+          ))} */}
+
           <div>
             <strong className="cart-total-price">
               Tổng tiền:{" "}
-              <NumberFormat
-                value={totalPrice}
-                thousandSeparator={true}
-                suffix="đ"
-                displayType="text"
-              />
+              {totalPrice.toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+              })} {" "}
+              
             </strong>
           </div>
         </Col>
@@ -69,18 +105,65 @@ const CartPage = () => {
           </Button>
         </Col>
       </Row>
-    </>
+      </>
+    ) : (
+      <>
+        <Row className="justify-content-center">
+          <Col md="5" className="text-center">
+            <Button as={Link} to="/home" variant="light" className="w-100 pt-2 pb-2">
+              <h4 className="mb-0">Chưa có sản phẩm trong giỏ hàng</h4>
+              <br />
+              <FaCartPlus size="50%" />
+            </Button>
+          </Col>
+        </Row>
+      </>
+        
+    )
   ) : (
-    <Row className="justify-content-center">
-      <Col md="5" className="text-center">
-        <Button as={Link} to="/home" variant="light" className="w-100 pt-2 pb-2">
-          <h4 className="mb-0">Chưa có sản phẩm trong giỏ hàng</h4>
-          <br />
-          <FaCartPlus size="50%" />
-        </Button>
-      </Col>
-    </Row>
-  );
+    (dataLocalProduct.current.length > 0) ? (
+      <>
+        <Row className="justify-content-center">
+        <Col lg="8">
+          <Alert variant="warning">
+            <h4 className="text-center mb-0">GIỎ HÀNG</h4>
+          </Alert>
+          {dataLocalProduct.current.map((item) => (
+              <CartItem isAuth={props.isAuthentication} key={item.cartId}   data={item} onChange={() => updatedCartLocal()}/>
+          ))}
+
+          <div>
+            <strong className="cart-total-price">
+              Tổng tiền:{" "}
+              {totalPriceLocal.current.toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+              })} {" "}
+              
+            </strong>
+          </div>
+        </Col>
+      </Row>
+      <Row className="justify-content-center mt-4 mb-5">
+        <Col md="4" className="text-center">
+          <Button className="w-100" as={Link} to="/checkout">
+            Tiến Hành Thanh Toán
+          </Button>
+        </Col>
+      </Row>
+      </>
+    ) : (
+      <Row className="justify-content-center">
+        <Col md="5" className="text-center">
+          <Button as={Link} to="/home" variant="light" className="w-100 pt-2 pb-2">
+            <h4 className="mb-0">Chưa có sản phẩm trong giỏ hàng</h4>
+            <br />
+            <FaCartPlus size="50%" />
+          </Button>
+        </Col>
+      </Row>
+    )
+  ))
 };
 
 export default CartPage;

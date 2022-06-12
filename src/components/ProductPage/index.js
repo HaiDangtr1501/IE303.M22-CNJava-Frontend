@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import { Col, Row, Carousel, Card, Alert } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useParams } from "react-router";
@@ -40,7 +40,7 @@ const ProductPage = ({ isAuth, isAdmin, enableBtnAddToCard }) => {
       clearTimeout(timeOut);
     };
   }, [productId]);
-
+  console.log("product page:", enableBtnAddToCard)
   return loading ? (
     <LoadingIndicator />
   ) : (
@@ -111,4 +111,4 @@ ProductPage.propTypes = {
   enableBtnAddToCard: PropTypes.bool.isRequired,
 };
 
-export default ProductPage;
+export default memo(ProductPage);

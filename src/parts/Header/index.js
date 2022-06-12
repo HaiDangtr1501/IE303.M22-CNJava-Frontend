@@ -136,13 +136,13 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
               <>
               </>
             )}
-            <Nav.Item>
+            {/* <Nav.Item>
               <Image
                 style={{ width: "2.5rem" }}
                 roundedCircle
                 src={currentUser.avatarUrl || "/img/avatar_default.png"}
               ></Image>
-            </Nav.Item>
+            </Nav.Item> */}
             <Nav.Item>
               <Nav.Link
                 // as={NavLink}
@@ -194,6 +194,17 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
           </Nav>
         ) : (
           <Nav className="ml-auto">
+            <Nav.Item>
+              <Nav.Link
+                as={NavLink}
+                activeClassName="active"
+                to="/cart"
+                className="relative navBar-item"
+              >
+                Giỏ Hàng
+                <BsCart3 className="navBar-item_icon" />
+              </Nav.Link>
+            </Nav.Item>
             <Nav.Item>
               <Nav.Link as={Link} to="/login" className="navBar-item">
                 Đăng nhập

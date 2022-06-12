@@ -59,3 +59,9 @@ h5 {
 .addCart-btn{
   /* margin-left: 40px; */
 }
+.active{
+  display: block !important;
+}
+.buttonCart{
+  display:none;
+}

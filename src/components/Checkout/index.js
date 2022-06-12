@@ -74,7 +74,6 @@ const CheckoutPage = ({ currentUser, updateCurrentUser }) => {
     }
   };
 
-  console.log(loading);
 
   return listItem.length > 0 ? (
     <>

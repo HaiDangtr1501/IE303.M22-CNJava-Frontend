@@ -1,5 +1,9 @@
-import React, { useEffect, useState } from "react";
+
+import React, { useEffect, useState, memo } from "react";
+import { Row, Col, Alert } from "react-bootstrap";
+
 import { Link } from "react-router-dom";
+
 import SAlert from "react-s-alert";
 import ProductList from "../../components/Product-List";
 import HeaderAdvertisement from "../../components/HeaderAdvertisement";
@@ -8,14 +12,13 @@ import { ImFire } from "react-icons/im";
 import { MdOutlineSmartphone } from "react-icons/md";
 import { BsChevronRight } from "react-icons/bs";
 import { BsCartPlus } from "react-icons/bs";
-
-
 import "./homeStyle.css";
 
-const Home = ({ isAdmin,currentUser}) => {
+
+const Home = ({ isAdmin, isAuthentication, currentUser }) => {
   const [sliderList, setSliderList] = useState([]);
   const [bannerList, setBannerList] = useState([]);
-
+  console.log("check auth home", isAuthentication)
   useEffect(() => {
     const getHeaderImage = async () => {
       try {
@@ -58,7 +61,7 @@ const Home = ({ isAdmin,currentUser}) => {
             <p>LAPTOP HOT <ImFire className="home-product-title_icon"/></p>
           </div>
           <div className="home-product-products">
-            {<ProductList isAdmin={isAdmin} size={4} category="Laptop" />}
+            {<ProductList isAdmin={isAdmin} size={4} isAuth={isAuthentication} category="Laptop" />}
           </div>
           <div className="home-product_more">
             <Link to="/laptop" className="home-product_more__content">Xem thêm...</Link>
@@ -71,7 +74,7 @@ const Home = ({ isAdmin,currentUser}) => {
             <p>New SmartPhone<MdOutlineSmartphone className="home-product-title_icon"/></p>
           </div>
           <div className="home-product-products">
-            {<ProductList isAdmin={isAdmin} size={4} category="SmartPhone" />}
+            {<ProductList isAdmin={isAdmin} isAuth={isAuthentication} size={4} category="SmartPhone" />}
           </div>
           <div className="home-product_more">
             <Link to="/smartphone" className="home-product_more__content">Xem thêm...</Link>
@@ -82,11 +85,11 @@ const Home = ({ isAdmin,currentUser}) => {
           <p>Để có nhiều ưu đãi hấp dẫn!</p>
           <button className="home-recommend_btn">
           {
-            !currentUser ? (<Link to="/signup" className="home-recommend_link">Đăng ký ngay</Link>) : (<Link to="/laptop" className="home-recommend_link">Khám phá ngay</Link>)
+            !currentUser ? (<Link to="/login" className="home-recommend_link">Đăng ký ngay</Link>) : (<Link to="/laptop" className="home-recommend_link">Khám phá ngay</Link>)
           }
           </button>
       </div>
     </div>
   );
 };
-export default Home;
+export default memo(Home);

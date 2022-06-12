@@ -100,11 +100,12 @@ const Login = (props) => {
 
   return (
     <Row className="justify-content-center">
-      <Card as={Col} md="6">
+      <Card as={Col} md="7">
+        <Card.Img src = "http://localhost:3000/img/JAVA_LAPTOP-removebg-preview(2).png" style={{ width: "250px", margin: "auto", paddingTop: "10px" }}/>
         <Card.Body>
-          <Card.Title className="mb-4">
+          {/* <Card.Title className="mb-4">
             <h3 className="text-center">Login to JAVA</h3>
-          </Card.Title>
+          </Card.Title> */}
           <Form onSubmit={(e) => handleOnSubmit(e)}>
             <Form.Group>
               <Form.Label htmlFor="email" className="text-left">

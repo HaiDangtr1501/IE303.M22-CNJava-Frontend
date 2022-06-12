@@ -20,7 +20,7 @@ const SendEmailVerification = ({ isAuth }) => {
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
-      console.log("chay vao day");
+
       (async () => {
         try {
           const response = await AuthApi.verifyEmail(token);

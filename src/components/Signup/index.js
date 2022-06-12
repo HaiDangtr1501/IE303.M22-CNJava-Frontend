@@ -69,11 +69,13 @@ const Signup = ({ onSignup, isAuthentication }) => {
 
   return (
     <Row className="justify-content-center">
-      <Card as={Col} lg="6" md="8">
+      <Card as={Col} lg="7" md="8">
+        <Card.Img src = "http://localhost:3000/img/JAVA_LAPTOP-removebg-preview(2).png" style={{ width: "250px", margin: "auto", paddingTop: "10px" }}/>
         <Card.Body>
-          <Alert variant="info text-center">
+          {/* <Alert variant="info text-center">
             <h4 className="mb-0 fw-bold">TẠO TÀI KHOẢN</h4>
-          </Alert>
+          </Alert> */}
+          
           <Form onSubmit={(e) => handleSignup(e)}>
             <Form.Group>
               <Form.Label htmlFor="name" className="text-left">
@@ -100,7 +102,7 @@ const Signup = ({ onSignup, isAuthentication }) => {
                 value={email}
                 onChange={(e) => onChangeEmail(e)}
                 type="email"
-                placeholder="Nhập email của bản"
+                placeholder="Nhập email của bạn"
                 isInvalid={error.email}
               ></Form.Control>
               {error.email && (
@@ -115,6 +117,7 @@ const Signup = ({ onSignup, isAuthentication }) => {
               </Form.Label>
               <Form.Control
                 id="password"
+                required
                 value={password}
                 onChange={(e) => onChangePassword(e)}
                 type="password"
@@ -145,8 +148,9 @@ const Signup = ({ onSignup, isAuthentication }) => {
                 </Form.Control.Feedback>
               )}
             </Form.Group>
-            <Form.Group className="text-center">
-              <Button className="w-50 mb-3" variant="dark" type="submit">
+            <Form.Group className="text-center " style={{marginTop: "40px"}}>
+            
+              <Button className="col-12 mb-3" variant="dark" type="submit" size="lg">
                 {loading ? (
                   <Spinner size="sm" animation="border" variant="light" />
                 ) : (
