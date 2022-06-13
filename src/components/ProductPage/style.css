@@ -74,3 +74,10 @@
 {
   padding: 10px 20px;
 }
+.modal-link{
+  color: #fff;
+}
+.modal-link:hover{
+  color: #fff;
+  text-decoration: none;
+}

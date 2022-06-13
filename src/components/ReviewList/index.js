@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ProductApi from "../../api/product";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Rating from "react-rating";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
@@ -17,6 +18,12 @@ const ReviewList = ({ isAuth, productId, closeButton }) => {
   const [rating, setRating] = useState(3);
   const [hasNewReview, setHasNewReview] = useState(false);
 
+  /*modal*/
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  /*modal*/
   useEffect(() => {
     const getListReview = async () => {
       try {
@@ -46,7 +53,11 @@ const ReviewList = ({ isAuth, productId, closeButton }) => {
   const addReview = async (e) => {
     e.preventDefault();
     try {
-      const response = await ProductApi.createProductReview(productId, comment, rating);
+      const response = await ProductApi.createProductReview(
+        productId,
+        comment,
+        rating
+      );
       setHasNewReview(true);
       Alert.success(response.data.message);
     } catch (error) {
@@ -60,7 +71,11 @@ const ReviewList = ({ isAuth, productId, closeButton }) => {
         (listReview.content.length > 0 ? (
           <>
             {listReview.content.map((review) => (
-              <Review review={review} closeButton={closeButton} key={review.id} />
+              <Review
+                review={review}
+                closeButton={closeButton}
+                key={review.id}
+              />
             ))}
             <ReactPaginate
               pageCount={listReview.totalPages}
@@ -85,37 +100,58 @@ const ReviewList = ({ isAuth, productId, closeButton }) => {
           <h4 className="text-center mb-5">Chưa có đánh giá</h4>
         ))}
 
-      {isAuth &&
-        (isReviewed ? (
-          <h4 className="text-center">Bạn đã đánh giá sản phẩm</h4>
-        ) : (
-          <>
-            <Form.Group className="mb-1">
-              <Form.Label htmlFor="comment">
-                <b>Đánh giá của bạn</b>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                id="comment"
-                onChange={(e) => setComment(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Rating
-              className="mb-2"
-              style={{color: "#FADB14"}}
-              step={1}
-              fractions={2}
-              initialRating={rating}
-              onChange={(value) => setRating(value)}
-              emptySymbol={<BsStar size="20px" />}
-              fullSymbol={<BsStarFill size="20px" />}
-            />
-            <br />
+      {isReviewed ? (
+        <h4 className="text-center">Bạn đã đánh giá sản phẩm</h4>
+      ) : (
+        <>
+          <Form.Group className="mb-1">
+            <Form.Label htmlFor="comment">
+              <b>Đánh giá của bạn</b>
+            </Form.Label>
+            <Form.Control
+              type="text"
+              id="comment"
+              onChange={(e) => setComment(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+          <Rating
+            className="mb-2"
+            style={{ color: "#FADB14" }}
+            step={1}
+            fractions={2}
+            initialRating={rating}
+            onChange={(value) => setRating(value)}
+            emptySymbol={<BsStar size="20px" />}
+            fullSymbol={<BsStarFill size="20px" />}
+          />
+          <br />
+          {isAuth ? (
             <Button type="submit" onClick={addReview}>
               Thêm nhận xét
             </Button>
-          </>
-        ))}
+          ) : (
+            <Button type="submit" onClick={handleShow}>
+              Thêm nhận xét
+            </Button>
+          )}
+          <Modal show={show} onHide={handleClose}>
+            {/* <Modal.Header closeButton>
+              <Modal.Title>Modal heading</Modal.Title>
+            </Modal.Header> */}
+            <Modal.Body>
+              Bạn cần đăng nhập để nhận xét!
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Đóng
+              </Button>
+              <Button variant="primary" >
+                <Link to="/login" className="modal-link">Đăng nhập</Link>
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
+      )}
     </>
   );
 };

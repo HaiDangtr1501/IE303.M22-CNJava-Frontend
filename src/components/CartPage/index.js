@@ -72,7 +72,7 @@ const CartPage = (props) => {
   }
   return (props.isAuthentication ? (
     (listItem.length > 0) ? (
-      <>
+      <div className="cart-container">
         <Row className="justify-content-center">
         <Col lg="8">
           <Alert variant="warning">
@@ -101,7 +101,7 @@ const CartPage = (props) => {
           </Button>
         </Col>
       </Row>
-      </>
+      </div>
     ) : (
       <>
         <Row className="justify-content-center">

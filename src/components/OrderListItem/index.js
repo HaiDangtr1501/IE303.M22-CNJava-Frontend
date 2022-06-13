@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Table, Card, ListGroup, Button, Row, Col, Spinner } from "react-bootstrap";
+import {
+  Table,
+  Card,
+  ListGroup,
+  Button,
+  Row,
+  Col,
+  Spinner,
+  Modal,
+} from "react-bootstrap";
 import OrderApi from "../../api/order";
 import SAlert from "react-s-alert";
 
@@ -34,10 +43,15 @@ const OrderListItem = ({ order, isAdmin }) => {
   const [updating, setUpdating] = useState(false);
 
   const handleCancelOrder = async () => {
+    setShowDelete(false);
     setUpdating(true);
+    console.log("hủy");
     try {
       const response = await OrderApi.cancelOrder(orderItem.id);
+      console.log(orderItem.id);
+
       if (response.status === 200) {
+        console.log("huy thành công");
         setOrderItem({ ...orderItem, status: "Canceled" });
         SAlert.success(response.data.message);
         setUpdating(false);
@@ -51,6 +65,7 @@ const OrderListItem = ({ order, isAdmin }) => {
   };
 
   const handleUpdateOrder = async () => {
+    setShow(false);
     setUpdating(true);
     try {
       const response = await OrderApi.updateOrder(orderItem.id);
@@ -82,7 +97,15 @@ const OrderListItem = ({ order, isAdmin }) => {
       setUpdating(false);
     }
   };
+  /*modal*/
+  const [show, setShow] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const handleCloseDelete = () => setShowDelete(false);
+  const handleShowDelete = () => setShowDelete(true);
+  /*modal*/
   return (
     <Card className="mb-3">
       <Card.Header>
@@ -133,14 +156,18 @@ const OrderListItem = ({ order, isAdmin }) => {
                 <tr key={item.productName}>
                   <td>{item.productName}</td>
                   <td>
-                    {item.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") +
-                      "đ"}
+                    {item.price
+                      .toString()
+                      .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") + "đ"}
                   </td>
-                  <td>{item.discount > 0 ? `-${item.discount}%` : "Không có"}</td>
+                  <td>
+                    {item.discount > 0 ? `-${item.discount}%` : "Không có"}
+                  </td>
                   <td>{item.quantity}</td>
                   <td>
-                    {item.total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") +
-                      "đ"}
+                    {item.total
+                      .toString()
+                      .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") + "đ"}
                   </td>
                 </tr>
               ))}
@@ -161,18 +188,41 @@ const OrderListItem = ({ order, isAdmin }) => {
           <Row>
             {isAdmin && (
               <Col>
-                {!updating && !["Collected", "Canceled"].includes(orderItem.status) && (
+                {!updating &&
+                  !["Collected", "Canceled"].includes(orderItem.status) && (
+                    <>
+                      <Button
+                        size="sm"
+                        onClick={handleShow}
+                        className="mr-md-2"
+                        variant="success"
+                      >
+                        {orderStatus[orderItem.status].nextAction}
+                      </Button>
+                      <Modal show={show} onHide={handleClose}>
+                        <Modal.Header closeButton>
+                          <Modal.Title>
+                            Xác nhận trạng thái '
+                            {orderStatus[orderItem.status].nextAction}'đơn hàng?
+                          </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Footer>
+                          <Button variant="secondary" onClick={handleClose}>
+                            Đóng
+                          </Button>
+                          <Button variant="primary" onClick={handleUpdateOrder}>
+                            Xác nhận
+                          </Button>
+                        </Modal.Footer>
+                      </Modal>
+                    </>
+                  )}
+                {!updating && orderItem.status === "Shipping" && (
                   <Button
                     size="sm"
-                    onClick={handleUpdateOrder}
-                    className="mr-md-2"
-                    variant="success"
+                    onClick={handleReturnOrder}
+                    variant="warning"
                   >
-                    {orderStatus[orderItem.status].nextAction}
-                  </Button>
-                )}
-                {!updating && orderItem.status === "Shipping" && (
-                  <Button size="sm" onClick={handleReturnOrder} variant="warning">
                     Đơn hàng trả về
                   </Button>
                 )}
@@ -186,9 +236,26 @@ const OrderListItem = ({ order, isAdmin }) => {
             )}
             <Col className="text-md-right">
               {!["Collected", "Canceled"].includes(orderItem.status) && (
-                <Button size="sm" variant="danger" onClick={handleCancelOrder}>
-                  Hủy đơn hàng
-                </Button>
+                <>
+                  <Button size="sm" variant="danger" onClick={handleShowDelete}>
+                    Hủy đơn hàng
+                  </Button>
+                  <Modal show={showDelete} onHide={handleCloseDelete}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>
+                        Xác nhận trạng thái hủy đơn hàng?
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleCloseDelete}>
+                        Đóng
+                      </Button>
+                      <Button variant="primary" onClick={handleCancelOrder}>
+                        Xác nhận
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </>
               )}
             </Col>
           </Row>

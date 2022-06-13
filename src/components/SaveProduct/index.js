@@ -355,7 +355,12 @@ const SaveProduct = ({ editMode }) => {
   };
 
   return (
-    <Form onSubmit={handleSaveProduct}>
+    <div className="editProduct-container">
+      {/* <div className="editProduct-title">
+        <h2>Chỉnh sửa thông tin sản phẩm</h2>
+      </div> */}
+      <div className="editProduct-body">
+      <Form onSubmit={handleSaveProduct}>
       <Row className="mb-3">
         <Col lg="8" className="align-items-center">
           <Card>
@@ -367,7 +372,7 @@ const SaveProduct = ({ editMode }) => {
             <Card.Body>
               <Form.Row>
                 <Form.Group as={Col} md="6">
-                  <Form.Label>Tên sản phẩm</Form.Label>
+                  <Form.Label><strong>Tên sản phẩm</strong></Form.Label>
                   <Form.Control
                     type="text"
                     value={product.name}
@@ -379,7 +384,7 @@ const SaveProduct = ({ editMode }) => {
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col}>
-                  <Form.Label>Giá</Form.Label>
+                  <Form.Label><strong>Giá</strong></Form.Label>
                   <Form.Control
                     type="number"
                     value={product.price}
@@ -390,7 +395,7 @@ const SaveProduct = ({ editMode }) => {
               </Form.Row>
               <Form.Row>
                 <Form.Group as={Col}>
-                  <Form.Label>Loại sản phẩm</Form.Label>
+                  <Form.Label><strong>Loại sản phẩm</strong></Form.Label>
                   {editMode ? (
                     <Form.Text>
                       <h4>{product.categoryName}</h4>
@@ -404,7 +409,7 @@ const SaveProduct = ({ editMode }) => {
                   )}
                 </Form.Group>
                 <Form.Group as={Col}>
-                  <Form.Label>Thương hiệu</Form.Label>
+                  <Form.Label><strong>Thương hiệu</strong></Form.Label>
                   {editMode && (
                     <Form.Text ref={oldBrand}>
                       <h4>{product.brandName}</h4>
@@ -422,7 +427,7 @@ const SaveProduct = ({ editMode }) => {
 
               <Form.Row>
                 <Form.Group as={Col}>
-                  <Form.Label>Giảm giá</Form.Label>
+                  <Form.Label><strong>Giảm giá</strong></Form.Label>
                   <Form.Control
                     type="number"
                     value={product.discount}
@@ -433,7 +438,7 @@ const SaveProduct = ({ editMode }) => {
                   />
                 </Form.Group>
                 <Form.Group as={Col}>
-                  <Form.Label>Số lượng</Form.Label>
+                  <Form.Label><strong>Số lượng</strong></Form.Label>
                   <Form.Control
                     type="number"
                     value={product.quantity}
@@ -444,7 +449,7 @@ const SaveProduct = ({ editMode }) => {
               </Form.Row>
 
               <Form.Group>
-                <Form.Label>Ảnh chính sản phẩm</Form.Label>
+                <Form.Label><strong>Ảnh chính sản phẩm</strong></Form.Label>
                 <Form.Control type="file" onChange={onChangeImageOfficial} />
                 {imageOfficial.preview && (
                   <Card as={Col} md="8">
@@ -454,7 +459,7 @@ const SaveProduct = ({ editMode }) => {
               </Form.Group>
 
               <Form.Group>
-                <Form.Label>Slider hình ảnh cho sản phẩm</Form.Label>
+                <Form.Label><strong>Slider hình ảnh cho sản phẩm</strong></Form.Label>
                 <Form.Control type="file" multiple onChange={onChangeListImage} />
                 {listImageSlider.length > 0 && (
                   <CardColumns>
@@ -473,7 +478,7 @@ const SaveProduct = ({ editMode }) => {
               </Form.Group>
 
               <Form.Group>
-                <Form.Label>Description</Form.Label>
+                <Form.Label><strong>Description</strong></Form.Label>
                 <Form.Control
                   as="textarea"
                   rows="5"
@@ -489,11 +494,11 @@ const SaveProduct = ({ editMode }) => {
         <Col lg="4">
           <Card>
             <Card.Header>
-              <h3 className="text-center">Thông số sản phẩm</h3>
+              <h3 className="text-center"><strong>Thông số sản phẩm</strong></h3>
             </Card.Header>
             <Card.Body>
               {!product.categoryName ? (
-                <Card.Text className="text-center">Chọn loại sản phẩm trước</Card.Text>
+                <Card.Text className="text-center"><strong>Chọn loại sản phẩm trước</strong></Card.Text>
               ) : (
                 productDetailsByCategory(product.categoryName)
               )}
@@ -517,11 +522,14 @@ const SaveProduct = ({ editMode }) => {
           {loading ? (
             <Spinner animation="border"></Spinner>
           ) : (
-            <h4>{editMode ? "Sửa thông tin sản phẩm" : "Thêm sản phẩm"}</h4>
+            <h4>{editMode ? "Cập nhật sản phẩm" : "Thêm sản phẩm"}</h4>
           )}
         </Button>
       </Form.Group>
     </Form>
+      </div>
+    </div>
+    
   );
 };
 

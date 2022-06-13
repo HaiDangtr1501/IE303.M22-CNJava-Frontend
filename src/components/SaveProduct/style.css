@@ -1,0 +1,17 @@
+.editProduct-container{
+    /* padding: 0 200px; */
+}
+.editProduct-title{
+    text-align: center;
+    padding: 20px;
+    color: rgb(13, 110, 253);
+}
+.editProduct-body
+{
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    margin-top: 10px;
+}

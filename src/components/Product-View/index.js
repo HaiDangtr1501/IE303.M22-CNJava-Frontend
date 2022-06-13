@@ -1,37 +1,52 @@
-import React, { useState, useEffect, useCallback, useMemo, memo,useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  memo,
+  useRef,
+} from "react";
 import { Card, Badge, Button, ButtonGroup } from "react-bootstrap";
 import PropTypes, { array } from "prop-types";
 import NumberFormat from "react-number-format";
 import "./style.css";
 import { Link } from "react-router-dom";
 import { BsStar, BsStarFill } from "react-icons/bs";
-import { BsCartPlus} from "react-icons/bs";
+import { BsCartPlus } from "react-icons/bs";
 import SAlert from "react-s-alert";
 import Rating from "react-rating";
 import CartApi from "../../api/cart";
 import YesNoQuestion from "../Dialog/YesNoQuestion";
 import ProductApi from "../../api/product";
-import  { useStore,actions } from "../../store";
-const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
-
+import { useStore, actions } from "../../store";
+const ProductView = ({
+  isAuth,
+  isAdmin,
+  enableBtnAddToCard,
+  product,
+  isInCart,
+}) => {
   const [state, dispatch] = useStore();
-  const {countCartItems} = state;
+  const { countCartItems } = state;
 
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [checkQuantity, setCheckQuantity] = useState(false);
-  // const dataLocalProduct = useRef(0)
-  
+  // const [cartItems, setCartItems] = useState([]);
+  // const [check, setCheck] = useState(false);
 
+  // const dataLocalProduct = useRef(0)
   // const [listItem, setListItem] = useState([]);
 
   const getImageOfficial = () => {
     const official = product.images.find(({ type }) => type === "Official");
     return official.url;
   };
- 
+
   const addToCart = async () => {
-    if(!isAuth){
-      let localCarts = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
+    if (!isAuth) {
+      let localCarts = localStorage.getItem("products")
+        ? JSON.parse(localStorage.getItem("products"))
+        : [];
       let productCart = {
         id: product.id,
         discount: product.discount,
@@ -40,58 +55,53 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
         price: product.price,
         quantity: 1,
         stock: product.quantity,
-        enable: true, 
-        key: 1
-
-      }
+        enable: true,
+        key: 1,
+      };
       // if(localCarts[0] === undefined) {
       //   productCart.quantity--;
       //   localCarts.push(productCart);
-      // }  
-      let flag = false
-      for (let i = 0; i < localCarts.length; i++){
-        localCarts[i].key++
+      // }
+      let flag = false;
+      for (let i = 0; i < localCarts.length; i++) {
+        localCarts[i].key++;
         // SAlert.success(`Thêm thành công sản phẩm ${localCarts[i].name} vào giỏ hàng`)
-        if(localCarts[i].name === productCart.name){
-          
-          if(localCarts[i].quantity + 1 > localCarts[i].stock){
-            SAlert.error("Không đủ sản phẩm")
-            setCheckQuantity(true)
-            
-          }else{
-            SAlert.success(`Thêm thành công ${localCarts[i].quantity + 1} sản phẩm ${localCarts[i].name} vào giỏ hàng`)
+        if (localCarts[i].name === productCart.name) {
+          if (localCarts[i].quantity + 1 > localCarts[i].stock) {
+            SAlert.error("Không đủ sản phẩm");
+            setCheckQuantity(true);
+          } else {
+            SAlert.success(
+              `Thêm thành công ${localCarts[i].quantity + 1} sản phẩm ${
+                localCarts[i].name
+              } vào giỏ hàng`
+            );
             localCarts[i].quantity++;
-
           }
           flag = true;
           break;
         }
       }
-      if(!flag){
-        SAlert.success(`Thêm thành công vào giỏ hàng`)
+      if (!flag) {
+        SAlert.success(`Thêm thành công vào giỏ hàng`);
         localCarts.push(productCart);
       }
       localStorage.setItem("products", JSON.stringify(localCarts));
-      
-      
-      
-    }else{
+    } else {
       try {
         const response = await CartApi.addProduct(product.id);
         // console.log("duy" + response.data);
         if (response.status === 200) {
           SAlert.success(response.data);
-        }        
+        }
       } catch (error) {
         SAlert.error(error.response.data.message);
-      };
-      try{
-          const countCartItems = await CartApi.getCart();
-          dispatch(actions.addCart(countCartItems.data.length));
       }
-      catch(e){};
+      try {
+        const countCartItems = await CartApi.getCart();
+        dispatch(actions.addCart(countCartItems.data.length));
+      } catch (e) {}
     }
-
   };
   // useMemo(()=>{
   //   if(!isAuth){
@@ -119,16 +129,16 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
   //   const getCart = async () => {
   //     const response = await CartApi.getCart();
   //     setListItem(response.data)
-      
+
   //   }
   //   getCart();
   // },[])
-  
+
   // listItem.map((item) => {
   //   if(item.productName == product.name){
   //     setCheckItem(true)
   //   }
-    
+
   // })
   const handleDeleteProduct = async () => {
     setOpenDeleteDialog(false);
@@ -142,11 +152,11 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
     }
   };
 
-  const resolve = Math.round(
-    (product.price - (product.price * product.discount) / 100) / 10000
-  ) * 10000
-  
-  
+  const resolve =
+    Math.round(
+      (product.price - (product.price * product.discount) / 100) / 10000
+    ) * 10000;
+
   return (
     <Card className="product-card" key={product.id}>
       <Link to={`/products/${product.id}`}>
@@ -159,25 +169,25 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
       </Link>
       <Card.Body className="p-2">
         <Link to={`/products/${product.id}`} className="product-card_link">
-          <h3 className="product-card_title" style={{ cursor: "pointer" }}>{product.name}</h3>
+          <h3 className="product-card_title" style={{ cursor: "pointer" }}>
+            {product.name}
+          </h3>
         </Link>
-        
+
         <h5 className="old-price_container">
           {resolve.toLocaleString("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
+            style: "currency",
+            currency: "VND",
           })}
         </h5>
         <h5>
-        {product.discount !== 0 && (
+          {product.discount !== 0 && (
             <React.Fragment>
-              <span
-                className="old-price"
-              >
-              {product.price.toLocaleString("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-              })} {" "}
+              <span className="old-price">
+                {product.price.toLocaleString("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                })}{" "}
               </span>
               {/* <NumberFormat
                 className="old-price"
@@ -190,7 +200,9 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
             </React.Fragment>
           )}
         </h5>
-        <div style={{ minHeight: "30px", marginBottom:"10px", marginTop:"5px" }}>
+        <div
+          style={{ minHeight: "30px", marginBottom: "10px", marginTop: "5px" }}
+        >
           {product.reviewCount > 0 && (
             <>
               <Rating
@@ -199,9 +211,7 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
                 fullSymbol={<BsStarFill color="#FADB14" />}
                 readonly
               />{" "}
-
               {/* <span style={{ color: "#FADB14" }}>{product.reviewCount}</span> */}
-
             </>
           )}
         </div>
@@ -240,19 +250,28 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
           </Button>
         )
     } */}
-        
-        {!isAdmin  &&(
-          
-          checkQuantity ? (
-            <Button disabled={checkQuantity} variant="danger" id="buttonAddCart">
-              Không đủ số lượng <BsCartPlus/>
+
+        {!isAdmin &&
+          (checkQuantity ? (
+            <Button
+              disabled={checkQuantity}
+              variant="danger"
+              id="buttonAddCart"
+            >
+              Không đủ số lượng <BsCartPlus />
             </Button>
-          ):(
-            <Button disabled={checkQuantity} variant="success" onClick={addToCart} id="buttonAddCart">
-              Thêm giỏ hàng <BsCartPlus/>
+          ) : isInCart ? (
+            <Button disabled>Đã thêm vào giỏ hàng</Button>
+          ) : (
+            <Button
+              disabled={checkQuantity}
+              variant="success"
+              onClick={addToCart}
+              id="buttonAddCart"
+            >
+              Thêm giỏ hàng <BsCartPlus />
             </Button>
-          )   
-        )}
+          ))}
         {/* {!isAuth && (
           dataLocalProduct.current.length > 0 ? (
             dataLocalProduct.current.map((data) => {
@@ -274,9 +293,9 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
           
         )} */}
 
-        <Button variant="danger" id="buttonDoneAddCart" className="buttonCart">
+        {/* <Button variant="danger" id="buttonDoneAddCart" className="buttonCart">
             Đã thêm vào giỏ hàng
-        </Button>
+        </Button> */}
         {/* {flag ? (
           <Button variant="danger"  >
           Đã thêm vào giỏ hàng
@@ -287,7 +306,6 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
           </Button>
         )}
          */}
-
       </Card.Body>
     </Card>
   );

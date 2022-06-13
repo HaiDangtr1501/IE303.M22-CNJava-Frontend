@@ -7,6 +7,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import SAlert from "react-s-alert";
 import UserContact from "../UserContact";
 import PaymentApi from "../../api/payment";
+import { useStore, actions } from "../../store";
 
 const public_key = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY;
 
@@ -14,6 +15,9 @@ const CheckoutPage = ({ currentUser, updateCurrentUser }) => {
   const [listItem, setListItem] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(true);
+
+  const [state, dispatch] = useStore();
+  const { countCartItems } = state;
 
   const history = useHistory();
 
@@ -49,6 +53,10 @@ const CheckoutPage = ({ currentUser, updateCurrentUser }) => {
       if (response.status === 200) {
         const session_id = response.data;
         stripePromise.redirectToCheckout({ sessionId: session_id });
+        try {
+          const countCartItems = await CartApi.getCart();
+          dispatch(actions.addCart(countCartItems.data.length));
+        } catch (e) {}
       }
     } catch (error) {
       const message =
@@ -66,6 +74,10 @@ const CheckoutPage = ({ currentUser, updateCurrentUser }) => {
       if (response.status === 200) {
         SAlert.success(response.data.message);
         history.replace("/profile");
+        try {
+          const countCartItems = await CartApi.getCart();
+          dispatch(actions.addCart(countCartItems.data.length));
+        } catch (e) {}
       }
     } catch (error) {
       if (error.response.status === 400) {
