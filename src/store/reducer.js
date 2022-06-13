@@ -1,4 +1,4 @@
-import { ADD_CART, DELETE_CART } from "./constants";
+import { ADD_CART, DELETE_CART, SET_CART } from "./constants";
 
 const initState = {
     countCartItems: 0,
@@ -15,6 +15,10 @@ function reducer(state, action) {
       return {
         countCartItems: action.payload,
       };
+      case SET_CART:
+        return {
+          countCartItems: action.payload,
+        };    
     default:
       throw new Error("Invalid action!");
   }

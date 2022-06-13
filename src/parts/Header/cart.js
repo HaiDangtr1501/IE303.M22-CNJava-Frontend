@@ -1,6 +1,6 @@
 import { BsCart3 } from "react-icons/bs";
 function Cart({ countCartItems }) {
-  return (
+  return  (
     <div className="container-count">
       Giỏ Hàng
       <BsCart3 className="navBar-item_icon cart-icon"/>

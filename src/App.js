@@ -49,17 +49,21 @@ const App = () => {
   const [cartItems, setCartItems] = useState(0);
 
   const [state, dispatch] = useStore();
-  // const {countCartItems} = state;
+  const {countCartItems} = state;
   const history = useHistory();
   const dataLocalProduct = useRef(0)
+  const [cartApi, setCartApi] = useState(0) 
+  const [cartLocal, setCartLocal] = useState(0)
   useEffect (()=>{
     if(!authenticated){
       dataLocalProduct.current = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
+      setCartLocal(dataLocalProduct.current.length)
       dispatch(actions.addCart(dataLocalProduct.current.length))
     }
   },[])
   useEffect (async ()=>{
      const response = await CartApi.getCart();
+     setCartApi(response.data.length)
      dispatch(actions.addCart(response.data.length))
   },[])
   useEffect(() => {
@@ -97,9 +101,9 @@ const App = () => {
 
       setAuthenticated(true);
       setAuthLoading(false);
+      dispatch(actions.setCart(cartApi))
 
       history.push("/home");
-
       return {
         type: "success",
         message: "Đăng nhập thành công",
@@ -119,8 +123,9 @@ const App = () => {
     setAuthenticated(false);
     setCurrentUser(null);
     setIsAdmin(false);
-
+    // dispatch(actions.setCart(0))
     Alert.success("You're logged out!");
+    dispatch(actions.setCart(cartLocal))
   };
   return (
     <div>
