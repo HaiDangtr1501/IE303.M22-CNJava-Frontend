@@ -1,7 +1,7 @@
 .login-signup__wrapper{
     margin: 0 auto;
   margin-top: 50px;
-  width: 766px;
+  width: 740px;
   height: 70px;
   border: 1px solid #c4c4c4;
   border-radius: 10px 10px 0px 0px;
@@ -29,3 +29,7 @@
   background-color: #fff;
 }
 
+.layout-container{
+  width: 776px;
+  margin:auto;
+}

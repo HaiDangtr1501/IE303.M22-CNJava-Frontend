@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Alert, Row, Col, Button } from "react-bootstrap";
+import { Alert, Row, Col, Button,Modal } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import NumberFormat from "react-number-format";
@@ -14,6 +15,19 @@ const CartPage = (props) => {
   const [loading, setLoading] = useState(true);
   const dataLocalProduct = useRef(0)
   const totalPriceLocal = useRef(0)
+  const history = useHistory();
+  /*modal*/
+  const [show, setShow] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const handleLogin = () => {
+    history.push('/login')
+  }
+  const handleCloseDelete = () => setShowDelete(false);
+  const handleShowDelete = () => setShowDelete(true);
+  /*modal*/
   
   const [hasUpdatedLocal, setHasUpdateLocal] = useState(false);
   
@@ -143,11 +157,27 @@ const CartPage = (props) => {
       </Row>
       <Row className="justify-content-center mt-4 mb-5">
         <Col md="4" className="text-center">
-          <Button className="w-100" as={Link} to="/checkout">
+          <Button className="w-100" onClick={handleShow}>
             Tiến Hành Thanh Toán
           </Button>
         </Col>
       </Row>
+      <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>
+          Vì lý do an toàn! Bạn cần phải
+          đăng nhập để thực hiện đặt hàng.
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Đóng
+        </Button>
+        <Button variant="primary" onClick={handleLogin}>
+          Xác nhận
+        </Button>
+      </Modal.Footer>
+      </Modal>                                    
       </>
     ) : (
       <Row className="justify-content-center">

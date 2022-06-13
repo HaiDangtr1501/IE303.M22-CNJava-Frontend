@@ -25,6 +25,7 @@ const ProductView = ({
   enableBtnAddToCard,
   product,
   isInCart,
+  isInCartLocal
 }) => {
   const [state, dispatch] = useStore();
   const { countCartItems } = state;
@@ -36,7 +37,7 @@ const ProductView = ({
 
   // const dataLocalProduct = useRef(0)
   // const [listItem, setListItem] = useState([]);
-
+  
   const getImageOfficial = () => {
     const official = product.images.find(({ type }) => type === "Official");
     return official.url;
@@ -66,21 +67,16 @@ const ProductView = ({
       for (let i = 0; i < localCarts.length; i++) {
         localCarts[i].key++;
         // SAlert.success(`Thêm thành công sản phẩm ${localCarts[i].name} vào giỏ hàng`)
-        if (localCarts[i].name === productCart.name) {
-          if (localCarts[i].quantity + 1 > localCarts[i].stock) {
-            SAlert.error("Không đủ sản phẩm");
-            setCheckQuantity(true);
-          } else {
-            SAlert.success(
-              `Thêm thành công ${localCarts[i].quantity + 1} sản phẩm ${
-                localCarts[i].name
-              } vào giỏ hàng`
-            );
-            localCarts[i].quantity++;
-          }
-          flag = true;
-          break;
-        }
+        // if (localCarts[i].name === productCart.name) {
+        //   if (localCarts[i].quantity + 1 > localCarts[i].stock) {
+        //     SAlert.error("Không đủ sản phẩm");
+        //     setCheckQuantity(true);
+        //   } else {
+        //     localCarts[i].quantity++;
+        //   }
+        //   flag = true;
+        //   break;
+        // }
       }
       if (!flag) {
         SAlert.success(`Thêm thành công vào giỏ hàng`);
@@ -107,43 +103,7 @@ const ProductView = ({
       } catch (e) {}
     }
   };
-  // useMemo(()=>{
-  //   if(!isAuth){
-  //     if (!localStorage.getItem("products")) {
-  //       localStorage.setItem("products", "[]");
-  //     }
-  //     dataLocalProduct.current = JSON.parse(localStorage.getItem("products"))
-  //     // for (let i = 0; i < dataLocalProduct.current.length; i++){
-  //     //   if(dataLocalProduct.current[i].quantity === dataLocalProduct.current[i].stock){
-  //     //     // dataType.current = dataLocalProduct[i].id
-  //     //     console.log("id", dataLocalProduct.current[i].id)
-  //     //   }
-  //     // }
-  //     // dataLocalProduct.map((data) => {
-  //     //   if(data.quantity === data.stock){
-  //     //     setCheckQuantity(true)
-  //     //   }
-  //     //   console.log("data", data.name)
-  //     //   return { ...data };
-  //     // })
-  //   }
-  // },[])
 
-  // useEffect(()=>{
-  //   const getCart = async () => {
-  //     const response = await CartApi.getCart();
-  //     setListItem(response.data)
-
-  //   }
-  //   getCart();
-  // },[])
-
-  // listItem.map((item) => {
-  //   if(item.productName == product.name){
-  //     setCheckItem(true)
-  //   }
-
-  // })
   const handleDeleteProduct = async () => {
     setOpenDeleteDialog(false);
     try {
@@ -247,69 +207,36 @@ const ProductView = ({
           </ButtonGroup>
         )}
 
-        {/* {
-        (checkItem) && (
-          <Button variant="danger">
-            Đã thêm vào giỏ hàng
-          </Button>
-        )
-    } */}
-
-        {!isAdmin &&
-          (checkQuantity ? (
-            <Button
-              disabled={checkQuantity}
-              variant="danger"
-              id="buttonAddCart"
-            >
-              Không đủ số lượng <BsCartPlus />
-            </Button>
-          ) : isInCart ? (
-            <Button disabled>Đã thêm vào giỏ hàng</Button>
-          ) : (
-            <Button
-              disabled={checkQuantity}
-              variant="success"
-              onClick={addToCart}
-              id="buttonAddCart"
-            >
-              Thêm giỏ hàng <BsCartPlus />
-            </Button>
-          ))}
-        {/* {!isAuth && (
-          dataLocalProduct.current.length > 0 ? (
-            dataLocalProduct.current.map((data) => {
-              if(data.quantity == data.stock){
-                <Button disabled={checkQuantity} variant="success" id="buttonAddCart">
-                  Thêm giỏ hàng <BsCartPlus/>
-                </Button>
-              }else{
-                <Button disabled={checkQuantity} variant="success" onClick={addToCart} id="buttonAddCart">
-                  Thêm giỏ hàng <BsCartPlus/>
-                </Button>
-              }
-            })
-          ): (
-            <Button disabled={checkQuantity} variant="success" onClick={addToCart} id="buttonAddCart">
-              Thêm giỏ hàng <BsCartPlus/>
-            </Button>
-          )
-          
-        )} */}
-
-        {/* <Button variant="danger" id="buttonDoneAddCart" className="buttonCart">
-            Đã thêm vào giỏ hàng
-        </Button> */}
-        {/* {flag ? (
-          <Button variant="danger"  >
-          Đã thêm vào giỏ hàng
-        </Button>
-        ):(
-          <Button variant="primary" onClick={addToCart} >
-            Thêm giỏ hàng
-          </Button>
-        )}
-         */}
+        
+          {!isAdmin && isAuth && (
+            isInCart ? (
+              <Button disabled>Đã thêm vào giỏ hàng</Button>
+            ) : (
+              <Button
+                
+                variant="success"
+                onClick={addToCart}
+                id="buttonAddCart"
+              >
+                Thêm giỏ hàng <BsCartPlus />
+              </Button>
+            )
+          )}
+          {!isAdmin && !isAuth && (
+            isInCartLocal ? (
+              <Button disabled>Đã thêm vào giỏ hàng</Button>
+            ) : (
+              <Button
+                
+                variant="success"
+                onClick={addToCart}
+                id="buttonAddCart"
+              >
+                Thêm giỏ hàng <BsCartPlus />
+              </Button>
+            )
+          )}
+        
       </Card.Body>
     </Card>
   );

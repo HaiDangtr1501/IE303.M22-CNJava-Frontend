@@ -30,15 +30,16 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
       variant="dark"
       className="navBar-container"
     >
-      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" className/>
       <Navbar.Brand>
         <Nav.Link
           as={NavLink}
           activeClassName="active"
-          className="font-weight-bold navBar-item navBar-item_title"
+          className=" navBar-item navBar-item_title"
           to="/"
         >
-          DDNK
+          <img src = "http://localhost:3000/img/JAVA_LAPTOP-removebg-preview(2).png" style={{ width: "70px", margin: "auto" }}/>
         </Nav.Link>
       </Navbar.Brand>
       <Navbar.Collapse>

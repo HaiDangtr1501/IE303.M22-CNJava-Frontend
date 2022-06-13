@@ -11,7 +11,6 @@ import {
 } from "react-bootstrap";
 import OrderApi from "../../api/order";
 import SAlert from "react-s-alert";
-import YesNoQuestion from "../Dialog/YesNoQuestion";
 
 const orderStatus = {
   Open: { status: "Đang xử lý", nextAction: "Xác nhận" },
@@ -162,12 +161,12 @@ const OrderListItem = ({ order, isAdmin }) => {
                 <tr key={item.productName}>
                   <td>{item.productName}</td>
                   <td>
-
                     {item.price.toLocaleString("vi-VN", {
                       style: "currency",
                       currency: "VND",
                     })}  
                   </td>
+                  <td>-{item.discount}%</td>
                   <td>{item.quantity}</td>
                   <td>
                     {(Math.round((item.price * item.quantity * (100 - item.discount)) /
