@@ -72,7 +72,7 @@ const OrderListItem = ({ order, isAdmin }) => {
         SAlert.error(error.response.data.message);
       }
   };
-
+  }
   const handleUpdateOrder = async () => {
     setShow(false);
     setUpdating(true);
@@ -90,7 +90,7 @@ const OrderListItem = ({ order, isAdmin }) => {
         SAlert.error(error.response.data.message);
       }
   };
-
+  }
   const handleReturnOrder = async () => {
     let text = "Người dùng xác nhập trạng thái đơn hàng trả về!"
     window.confirm(text)
@@ -286,5 +286,5 @@ const OrderListItem = ({ order, isAdmin }) => {
     </Card>
   );
   }
-}}
+
 export default OrderListItem;

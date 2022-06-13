@@ -202,11 +202,7 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
                   to="/cart"
                   className="relative navBar-item"
                 >
-                  {/* Giỏ Hàng 
-                <BsCart3 className="navBar-item_icon" />
-                {localStorage.getItem("countCartItems")} */}
                   <Cart
-                    currentUser={currentUser}
                     countCartItems={countCartItems}
                   />
                 </Nav.Link>
@@ -216,11 +212,6 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
                 Đăng nhập
               </Nav.Link>
             </Nav.Item>
-            {/* <Nav.Item>
-              <Nav.Link as={Link} to="/signup" className="navBar-item">
-                Đăng ký
-              </Nav.Link>
-            </Nav.Item> */}
           </Nav>
         )}
       </Navbar.Collapse>
