@@ -6,9 +6,9 @@ import PropTypes from "prop-types";
 const OrderList = ({ isAdmin, pageOrderData }) => {
   return pageOrderData && pageOrderData.content.length > 0 ? (
     <>
-      <div className="mb-2 text-center">
+      <h2 className="mb-2 text-center">
         <strong>Tìm thấy {pageOrderData.totalElements} kết quả</strong>
-      </div>
+      </h2>
       {pageOrderData.content.map((order) => (
         <Row key={order.id}>
           <Col>

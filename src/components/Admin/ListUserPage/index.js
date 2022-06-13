@@ -73,7 +73,7 @@ const ListUserPage = () => {
                 <th>Số điện thoại</th>
                 <th>Địa chỉ liên hệ</th>
                 <th>Quyền</th>
-                <th>Thêm quyền admin</th>
+                <th>Thêm quyền quản trị viên</th>
               </tr>
             </thead>
             <tbody>
@@ -109,7 +109,7 @@ const ListUserPage = () => {
                         />
                       </>
                     ) : (
-                      "Is Admin"
+                      "Quản trị viên"
                     )}
                   </td>
                 </tr>

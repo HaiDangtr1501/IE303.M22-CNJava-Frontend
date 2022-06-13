@@ -35,7 +35,7 @@ const ResetPassword = ({ isAuth }) => {
   }
 
   return (
-    <Row className="justify-content-center">
+    <Row className="justify-content-center mb-5 mt-5">
       <Col lg="5" md="6">
         <Card>
           <Card.Body>

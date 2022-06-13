@@ -35,7 +35,7 @@ const UserContact = ({ country, province, district, detail, phone, onUpdated }) 
     setUserContactInfo(initUserInfo);
     setUpdateInfo(false);
   };
-
+  console.log("info", userContactInfo)
   return (
     <>
       <Form>

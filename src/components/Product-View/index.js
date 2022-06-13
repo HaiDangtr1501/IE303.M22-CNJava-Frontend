@@ -31,8 +31,8 @@ const ProductView = ({
 
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [checkQuantity, setCheckQuantity] = useState(false);
-  // const [cartItems, setCartItems] = useState([]);
-  // const [check, setCheck] = useState(false);
+
+  const dataLocalProduct = useRef(0)
 
   // const dataLocalProduct = useRef(0)
   // const [listItem, setListItem] = useState([]);
@@ -86,8 +86,12 @@ const ProductView = ({
         SAlert.success(`Thêm thành công vào giỏ hàng`);
         localCarts.push(productCart);
       }
+      
       localStorage.setItem("products", JSON.stringify(localCarts));
-    } else {
+
+      dataLocalProduct.current = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
+      dispatch(actions.addCart(dataLocalProduct.current.length));
+    }else{
       try {
         const response = await CartApi.addProduct(product.id);
         // console.log("duy" + response.data);

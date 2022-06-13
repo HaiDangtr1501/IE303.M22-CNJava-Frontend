@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
-import { Card, Form, Button, Col, Row, Alert, Spinner } from "react-bootstrap";
+import { Card, Form, Button, Col, Row, Alert, Spinner, InputGroup } from "react-bootstrap";
 import AuthApi from "../../api/auth";
 import SAlert from "react-s-alert";
+import { FaGoogle, FaFacebook } from "react-icons/fa";
+import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL } from "../../constants";
 
 const Signup = ({ onSignup, isAuthentication }) => {
   const [email, setEmail] = useState("");
@@ -10,6 +12,8 @@ const Signup = ({ onSignup, isAuthentication }) => {
   const [name, setName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [passwordConfirmVisible, setPasswordConfirmVisible] = useState(false);
   const [error, setError] = useState({
     name: "",
     password: "",
@@ -68,8 +72,8 @@ const Signup = ({ onSignup, isAuthentication }) => {
   }
 
   return (
-    <Row className="justify-content-center">
-      <Card as={Col} lg="7" md="8">
+    <Row className="justify-content-center mb-lg-5">
+      <Card as={Col} lg="6" md="8">
         <Card.Img src = "http://localhost:3000/img/JAVA_LAPTOP-removebg-preview(2).png" style={{ width: "250px", margin: "auto", paddingTop: "10px" }}/>
         <Card.Body>
           {/* <Alert variant="info text-center">
@@ -114,43 +118,59 @@ const Signup = ({ onSignup, isAuthentication }) => {
             <Form.Group>
               <Form.Label htmlFor="password" className="text-left">
                 Mật khẩu
-              </Form.Label>
-              <Form.Control
-                id="password"
-                required
-                value={password}
-                onChange={(e) => onChangePassword(e)}
-                type="password"
-                placeholder="Nhập mật khẩu"
-                isInvalid={error.password}
-              ></Form.Control>
-              {error.password && (
-                <Form.Control.Feedback type="invalid">
-                  {error.password}
-                </Form.Control.Feedback>
-              )}
+              </Form.Label>   
+              <InputGroup>
+                <Form.Control
+                  id="password"
+                  required
+                  value={password}
+                  onChange={(e) => onChangePassword(e)}
+                  type={passwordVisible ? "text" : "password"}
+                  placeholder="Nhập mật khẩu"
+                  isInvalid={error.password}
+                ></Form.Control>
+                <InputGroup.Text
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setPasswordVisible(!passwordVisible)}
+                  >
+                    {passwordVisible ? "Ẩn" : "Hiện"}
+                </InputGroup.Text>
+                {error.password && (
+                  <Form.Control.Feedback type="invalid">
+                    {error.password}
+                  </Form.Control.Feedback>
+                )}
+              </InputGroup>
             </Form.Group>
             <Form.Group>
               <Form.Label htmlFor="confirmPassword" className="text-left">
                 Xác nhận mật khẩu
               </Form.Label>
-              <Form.Control
-                id="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => onChangeConfirmPassword(e)}
-                type="password"
-                placeholder="Xác nhận mật khẩu"
-                isInvalid={error.confirmPassword}
-              ></Form.Control>
-              {error.confirmPassword && (
-                <Form.Control.Feedback type="invalid">
-                  {error.confirmPassword}
-                </Form.Control.Feedback>
-              )}
+              <InputGroup>
+                <Form.Control
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => onChangeConfirmPassword(e)}
+                  type={passwordConfirmVisible ? "text" : "password"}
+                  placeholder="Xác nhận mật khẩu"
+                  isInvalid={error.confirmPassword}
+                ></Form.Control>
+                <InputGroup.Text
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setPasswordConfirmVisible(!passwordConfirmVisible)}
+                  >
+                    {passwordConfirmVisible ? "Ẩn" : "Hiện"}
+                </InputGroup.Text>
+                {error.confirmPassword && (
+                  <Form.Control.Feedback type="invalid">
+                    {error.confirmPassword}
+                  </Form.Control.Feedback>
+                )}
+              </InputGroup>
             </Form.Group>
             <Form.Group className="text-center " style={{marginTop: "40px"}}>
             
-              <Button className="col-12 mb-3" variant="dark" type="submit" size="lg">
+              <Button className="col-12 mb-3" variant="dark" type="submit" >
                 {loading ? (
                   <Spinner size="sm" animation="border" variant="light" />
                 ) : (
@@ -162,6 +182,19 @@ const Signup = ({ onSignup, isAuthentication }) => {
           <Card.Text className="text-center">
             Đã có tài khoản? <Link to="/login"> đăng nhập</Link>
           </Card.Text>
+          <Card.Subtitle className="mb-2 mt-2">
+              <h5 className="text-center">Hoặc</h5>
+            </Card.Subtitle>
+            <Form.Group>
+              <Button className="w-100" href={GOOGLE_AUTH_URL} variant="danger">
+                <FaGoogle /> Đăng nhập bằng Google
+              </Button>
+            </Form.Group>
+            <Form.Group>
+              <Button className="w-100" href={FACEBOOK_AUTH_URL} variant="primary">
+                <FaFacebook /> Đăng nhập bằng Facebook
+              </Button>
+            </Form.Group>
         </Card.Body>
       </Card>
     </Row>

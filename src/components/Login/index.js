@@ -99,8 +99,8 @@ const Login = (props) => {
   };
 
   return (
-    <Row className="justify-content-center">
-      <Card as={Col} md="7">
+    <Row className="justify-content-center mb-5">
+      <Card as={Col} md="6" >
         <Card.Img src = "http://localhost:3000/img/JAVA_LAPTOP-removebg-preview(2).png" style={{ width: "250px", margin: "auto", paddingTop: "10px" }}/>
         <Card.Body>
           {/* <Card.Title className="mb-4">
@@ -159,30 +159,30 @@ const Login = (props) => {
               </Link>
             </Form.Group>
             <Form.Group className="text-center mb-1">
-              <Button className="w-50" variant="dark" type="submit">
+              <Button className="col-12" variant="dark" type="submit" >
                 {!props.loading ? (
-                  "Login"
+                  "Đăng nhập"
                 ) : (
                   <Spinner animation="border" variant="light" size="sm" />
                 )}
               </Button>
             </Form.Group>
             <div className="text-center">
-              <Link className="text-decoration-none" to="/signup">
+              <Link className="text-decoration-none mt-3" to="/login">
                 Tạo tài khoản mới
               </Link>
             </div>
             <Card.Subtitle className="mb-2 mt-2">
-              <h5 className="text-center">Or</h5>
+              <h5 className="text-center">Hoặc</h5>
             </Card.Subtitle>
             <Form.Group>
               <Button className="w-100" href={GOOGLE_AUTH_URL} variant="danger">
-                <FaGoogle /> Login with Google
+                <FaGoogle /> Đăng nhập bằng Google
               </Button>
             </Form.Group>
             <Form.Group>
               <Button className="w-100" href={FACEBOOK_AUTH_URL} variant="primary">
-                <FaFacebook /> Login with Facebook
+                <FaFacebook /> Đăng nhập bằng Facebook
               </Button>
             </Form.Group>
           </Form>
