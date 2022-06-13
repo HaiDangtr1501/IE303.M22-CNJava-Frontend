@@ -23,6 +23,16 @@ const orderStatus = {
 };
 
 const OrderListItem = ({ order, isAdmin }) => {
+  /*modal*/
+  const [show, setShow] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const handleCloseDelete = () => setShowDelete(false);
+  const handleShowDelete = () => setShowDelete(true);
+  /*modal*/
+
   const [orderItem, setOrderItem] = useState({
     id: order.id,
     status: order.status,
@@ -42,7 +52,6 @@ const OrderListItem = ({ order, isAdmin }) => {
   });
 
   const [updating, setUpdating] = useState(false);
-  const [popupConfirmStatus, setPopupConfirmStatus] = useState(false);
 
   const handleCancelOrder = async () => {
 
@@ -57,11 +66,11 @@ const OrderListItem = ({ order, isAdmin }) => {
         setOrderItem({ ...orderItem, status: "Canceled" });
         SAlert.success(response.data.message);
         setUpdating(false);
-      }catch (error) {
-        if (error.response.status === 400) {
-          SAlert.error(error.response.data.message);
-        }
-    }
+      }
+    }catch (error) {
+      if (error.response.status === 400) {
+        SAlert.error(error.response.data.message);
+      }
   };
 
   const handleUpdateOrder = async () => {
@@ -74,11 +83,12 @@ const OrderListItem = ({ order, isAdmin }) => {
         SAlert.success("Cập nhật đơn hàng thành công!");
         setUpdating(false);
       }
-      catch (error) {
-        if (error.response.status === 400) {
-          SAlert.error(error.response.data.message);
-        }
+      
     }
+    catch (error) {
+      if (error.response.status === 400) {
+        SAlert.error(error.response.data.message);
+      }
   };
 
   const handleReturnOrder = async () => {
@@ -101,15 +111,7 @@ const OrderListItem = ({ order, isAdmin }) => {
 
     }
   };
-  /*modal*/
-  const [show, setShow] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const handleCloseDelete = () => setShowDelete(false);
-  const handleShowDelete = () => setShowDelete(true);
-  /*modal*/
+  
   return (
     <Card className="mb-3">
       <Card.Header>
@@ -283,6 +285,6 @@ const OrderListItem = ({ order, isAdmin }) => {
       </ListGroup>
     </Card>
   );
-};
-
+  }
+}}
 export default OrderListItem;

@@ -87,7 +87,6 @@ const App = () => {
     getUser();
     setHasUpdateCurrentUser(false);
   }, [authenticated, hasUpdateCurrentUser]);
-
   const loginHandler = async (e, authData) => {
     e.preventDefault();
     setAuthLoading(true);
@@ -114,6 +113,7 @@ const App = () => {
     }
   };
 
+  
   const logOut = async () => {
     localStorage.removeItem(ACCESS_TOKEN);
     setAuthenticated(false);
@@ -122,7 +122,6 @@ const App = () => {
 
     Alert.success("You're logged out!");
   };
-
   return (
     <div>
       <Header

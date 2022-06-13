@@ -130,6 +130,7 @@ const CartItem = ({ isAuth,data, onChange }) => {
       newRecord[i].key = i +1;
     }
     onChange()
+    dispatch(actions.addCart(newRecord.length));
     localStorage.setItem("products", JSON.stringify(newRecord));
   }
   
