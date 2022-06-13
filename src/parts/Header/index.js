@@ -10,6 +10,7 @@ import "./style.css";
 import { Navbar, Nav, Image } from "react-bootstrap";
 import { useStore } from "../../store";
 import Cart from "./cart";
+import { BsCart3 } from "react-icons/bs";
 
 const Header = ({ currentUser, isAdmin, logOut }) => {
   const [showSubNav, setShowSubNav] = useState(false);
@@ -154,6 +155,8 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
                   src={currentUser.avatarUrl}
                   alt={currentUser.name}
                 />
+                {" "}
+                <b>{currentUser.name}</b>
               </Nav.Link>
               <div
                 className={
@@ -213,11 +216,11 @@ const Header = ({ currentUser, isAdmin, logOut }) => {
                 Đăng nhập
               </Nav.Link>
             </Nav.Item>
-            <Nav.Item>
+            {/* <Nav.Item>
               <Nav.Link as={Link} to="/signup" className="navBar-item">
                 Đăng ký
               </Nav.Link>
-            </Nav.Item>
+            </Nav.Item> */}
           </Nav>
         )}
       </Navbar.Collapse>

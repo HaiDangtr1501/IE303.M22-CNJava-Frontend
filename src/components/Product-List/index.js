@@ -5,14 +5,27 @@ import ProductApi from "../../api/product";
 import SAlert from "react-s-alert";
 import PropTypes from "prop-types";
 import "./style.css";
-import "../../parts/Home/homeStyle.css"
+import "../../parts/Home/homeStyle.css";
 import LoadingIndicator from "../LoadingIndicator";
+import CartApi from "../../api/cart";
+import { useStore, actions } from "../../store";
 
 const ProductList = (props) => {
   const [productList, setProductList] = useState([]);
   const [page, setPage] = useState(props.page);
   const [totalPage, setTotalPage] = useState();
   const [loading, setLoading] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [check, setCheck] = useState(false);
+
+  const [state, dispatch] = useStore();
+  const { countCartItems } = state;
+  useEffect(async () => {
+    const cartItem = await CartApi.getCart();
+    if (cartItem) {
+      setCartItems(cartItem.data);
+    }
+  }, [countCartItems]);
   useEffect(() => {
     setLoading(true);
     const getProductData = async () => {
@@ -58,9 +71,11 @@ const ProductList = (props) => {
     <div className="container product-products">
       <Row>
         {productList.map((product) => (
-          <Col md="3" key={product.id} >
+          <Col md="3" key={product.id}>
             <ProductView
-              // enableBtnAddToCard={props.enableBtnAddToCard}
+              isInCart={cartItems.some(
+                (cartItem) => cartItem.productName === product.name
+              )}
               isAdmin={props.isAdmin}
               product={product}
               isAuth={props.isAuth}

@@ -1,0 +1,38 @@
+.profile-container{
+    padding: 30px 200px;
+
+}
+.profile-header{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    border-radius: 10px;
+    padding: 20px ;
+    margin-bottom: 30px;
+    display: flex;
+    vertical-align: middle;
+    justify-content: center;
+    align-items: center ;
+}
+.profile-header_avt .avt{
+    border: 2px solid #000;
+}
+.profile-header_infor
+{
+    margin-left: 40px;
+}
+.profile-header_infor p:first-child
+{
+    font-size: 20px;
+    font-weight: 600;
+}
+.profile-header_infor p
+{
+    margin: 0;
+}
+.profile-header_infor Button
+{
+    margin-top: 10px;
+}
+.profile-body{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    padding: 20px;
+}

@@ -5,6 +5,7 @@ import SAlert from "react-s-alert";
 import NumberFormat from "react-number-format";
 import CartApi from "../../api/cart";
 import { useStore, actions } from "../../store";
+import "./cartItem.css";
 
 const CartItem = ({ isAuth,data, onChange }) => {
   const [enable, setEnable] = useState(data.enable);
@@ -133,7 +134,8 @@ const CartItem = ({ isAuth,data, onChange }) => {
   }
   
   return (isAuth) ? (
-    <Row className="mt-3 mb-3 pt-2 pb-2 border" style={{ borderColor: "#333" }}>
+    <div className="cartItem-container">
+      <Row className="mt-3 mb-3 p-3" style={{ borderColor: "#333" }}>
       <Col md="3">
         <img className="img-thumbnail" src={data.productImageUrl} alt="" />
       </Col>
@@ -191,6 +193,8 @@ const CartItem = ({ isAuth,data, onChange }) => {
         />
       </Col>
     </Row>
+    </div>
+    
   ) : (
     <>
       <Row className="mt-3 mb-3 pt-2 pb-2 border" style={{ borderColor: "#333" }}>
