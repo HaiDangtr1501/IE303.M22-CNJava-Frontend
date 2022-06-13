@@ -1,7 +1,7 @@
 .login-signup__wrapper{
     margin: 0 auto;
   margin-top: 50px;
-  width: 665px;
+  width: 766px;
   height: 70px;
   border: 1px solid #c4c4c4;
   border-radius: 10px 10px 0px 0px;
@@ -17,7 +17,7 @@
 }
 .login-signup--login,
 .login-signup--signup{
-  width: 350px;
+  width: 383px;
     height: 70px;
     border-radius: 0px 10px 0px 0px;
     font-size: 20px;

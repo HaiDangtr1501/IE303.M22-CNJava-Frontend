@@ -53,8 +53,10 @@ const App = () => {
   const history = useHistory();
   const dataLocalProduct = useRef(0)
   useEffect (()=>{
-    dataLocalProduct.current = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
-    dispatch(actions.addCart(dataLocalProduct.current.length))
+    if(!authenticated){
+      dataLocalProduct.current = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
+      dispatch(actions.addCart(dataLocalProduct.current.length))
+    }
   },[])
   useEffect (async ()=>{
      const response = await CartApi.getCart();
