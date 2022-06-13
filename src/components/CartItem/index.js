@@ -158,27 +158,21 @@ const CartItem = ({ isAuth,data, onChange }) => {
         </Form.Group>
         <div className="mb-3">
           <strong>Thành tiền: </strong>
-          <NumberFormat
-            value={
-              Math.round(
-                (data.productPrice * quantity * (100 - data.productDiscount)) /
+            {(Math.round((data.productPrice * quantity * (100 - data.productDiscount)) /
                   100 /
                   10000
-              ) * 10000
-            }
-            thousandSeparator={true}
-            suffix="đ"
-            displayType="text"
-          />{" "}
-          {data.productDiscount > 0 && (
-            <NumberFormat
-              className="old-price"
-              value={data.quantity * data.productPrice}
-              thousandSeparator={true}
-              suffix="đ"
-              displayType="text"
-            />
-          )}
+              ) * 10000).toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+            })} {"  "}
+          <span className="old-price">
+            {data.productDiscount > 0 && (
+              (data.quantity * data.productPrice).toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              })  
+            )}   
+          </span>
         </div>
         <Form.Switch
           id={`switch-${data.cartId}`}
@@ -224,18 +218,16 @@ const CartItem = ({ isAuth,data, onChange }) => {
             </Form.Group>
             <div className="mb-3">
               <strong>Thành tiền: </strong>
-              <NumberFormat
-                value={
-                  Math.round(
+              {data.discount > 0 && (
+                  (Math.round(
                     (data.price * quantityLocal * (100 - data.discount)) /
                       100 /
                       10000
-                  ) * 10000
-                }
-                thousandSeparator={true}
-                suffix="đ"
-                displayType="text"
-              />{"   "}
+                  ) * 10000).toLocaleString("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  })
+                )} {"   "}
               <span className="old-price">
                 {data.discount > 0 && (
                   (data.quantity * data.price).toLocaleString("vi-VN", {

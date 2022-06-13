@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Table, Card, ListGroup, Button, Row, Col, Spinner } from "react-bootstrap";
 import OrderApi from "../../api/order";
 import SAlert from "react-s-alert";
+import YesNoQuestion from "../Dialog/YesNoQuestion";
 
 const orderStatus = {
   Open: { status: "Đang xử lý", nextAction: "Xác nhận" },
@@ -32,54 +33,69 @@ const OrderListItem = ({ order, isAdmin }) => {
   });
 
   const [updating, setUpdating] = useState(false);
+  const [popupConfirmStatus, setPopupConfirmStatus] = useState(false);
 
   const handleCancelOrder = async () => {
-    setUpdating(true);
-    try {
-      const response = await OrderApi.cancelOrder(orderItem.id);
-      if (response.status === 200) {
-        setOrderItem({ ...orderItem, status: "Canceled" });
-        SAlert.success(response.data.message);
+    let text = "Người dùng xác nhập trạng thái hủy đơn hàng!"
+    window.confirm(text)
+    if(window.confirm(text) ===  true){
+      setUpdating(true);
+      try {
+        const response = await OrderApi.cancelOrder(orderItem.id);
+        if (response.status === 200) {
+          setOrderItem({ ...orderItem, status: "Canceled" });
+          SAlert.success(response.data.message);
+          setUpdating(false);
+        }
+      } catch (error) {
+        if (error.response.status === 400) {
+          SAlert.error(error.response.data.message);
+        }
         setUpdating(false);
       }
-    } catch (error) {
-      if (error.response.status === 400) {
-        SAlert.error(error.response.data.message);
-      }
-      setUpdating(false);
     }
   };
 
   const handleUpdateOrder = async () => {
-    setUpdating(true);
-    try {
-      const response = await OrderApi.updateOrder(orderItem.id);
-      if (response.status === 200) {
-        setOrderItem({ ...orderItem, status: response.data.orderStatus });
-        SAlert.success("Cập nhật đơn hàng thành công!");
+    let text = "Người dùng xác nhập trạng thái đơn hàng!"
+    window.confirm(text)
+    if(window.confirm(text)){
+
+      setUpdating(true);
+      try {
+        const response = await OrderApi.updateOrder(orderItem.id);
+        if (response.status === 200) {
+          setOrderItem({ ...orderItem, status: response.data.orderStatus });
+          SAlert.success("Cập nhật đơn hàng thành công!");
+          setUpdating(false);
+        }
+      } catch (error) {
+        if (error.response.status === 400) {
+          SAlert.error(error.response.data.message);
+        }
         setUpdating(false);
       }
-    } catch (error) {
-      if (error.response.status === 400) {
-        SAlert.error(error.response.data.message);
-      }
-      setUpdating(false);
     }
   };
 
   const handleReturnOrder = async () => {
-    setUpdating(true);
-    try {
-      const response = await OrderApi.returnOrder(orderItem.id);
-      if (response.status === 200) {
-        setOrderItem({ ...orderItem, status: "Returned" });
+    let text = "Người dùng xác nhập trạng thái đơn hàng trả về!"
+    window.confirm(text)
+    if(window.confirm(text)){
+      setUpdating(true);
+      try {
+        const response = await OrderApi.returnOrder(orderItem.id);
+        if (response.status === 200) {
+          setOrderItem({ ...orderItem, status: "Returned" });
+          setUpdating(false);
+        }
+      } catch (error) {
+        if (error.response.status === 400) {
+          SAlert.error(error.response.data.message);
+        }
         setUpdating(false);
       }
-    } catch (error) {
-      if (error.response.status === 400) {
-        SAlert.error(error.response.data.message);
-      }
-      setUpdating(false);
+
     }
   };
 
@@ -133,14 +149,26 @@ const OrderListItem = ({ order, isAdmin }) => {
                 <tr key={item.productName}>
                   <td>{item.productName}</td>
                   <td>
-                    {item.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") +
-                      "đ"}
+                    {item.price.toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    })}  
                   </td>
                   <td>{item.discount > 0 ? `-${item.discount}%` : "Không có"}</td>
                   <td>{item.quantity}</td>
                   <td>
-                    {item.total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") +
-                      "đ"}
+                    {/* {item.total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") +
+                      "đ"} */}
+                    {(Math.round((item.price * item.quantity * (100 - item.discount)) /
+                        100 /
+                        10000
+                      ) * 10000).toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }).toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    })}
                   </td>
                 </tr>
               ))}
@@ -149,9 +177,11 @@ const OrderListItem = ({ order, isAdmin }) => {
                   <strong>
                     Tổng tiền:{" "}
                     <span>
-                      {orderItem.total
-                        .toString()
-                        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") + "đ"}
+                      {orderItem.total.toLocaleString("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      })}
+                      
                     </span>
                   </strong>
                 </td>
@@ -176,6 +206,13 @@ const OrderListItem = ({ order, isAdmin }) => {
                     Đơn hàng trả về
                   </Button>
                 )}
+                {/* <YesNoQuestion
+                          dialogTitle="Xác nhận trạng thái đơn hàng"
+                          dialogDescription={`Người dùng  xác nhận  cho đơn hàng`}
+                          isOpen={popupConfirmStatus}
+                          onClickNo={() => setPopupConfirmStatus(false)}
+                          onClickYes={handleReturnOrder}
+                        /> */}
                 {updating && (
                   <>
                     <Spinner animation="border" variant="primary"></Spinner>
@@ -191,6 +228,7 @@ const OrderListItem = ({ order, isAdmin }) => {
                 </Button>
               )}
             </Col>
+            
           </Row>
         </ListGroup.Item>
       </ListGroup>

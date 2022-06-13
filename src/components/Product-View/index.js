@@ -19,7 +19,7 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
 
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [checkQuantity, setCheckQuantity] = useState(false);
-  // const dataLocalProduct = useRef(0)
+  const dataLocalProduct = useRef(0)
   
 
   // const [listItem, setListItem] = useState([]);
@@ -71,7 +71,10 @@ const ProductView = ({ isAuth, isAdmin, enableBtnAddToCard, product }) => {
         SAlert.success(`Thêm thành công vào giỏ hàng`)
         localCarts.push(productCart);
       }
+      
       localStorage.setItem("products", JSON.stringify(localCarts));
+      dataLocalProduct.current = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
+      dispatch(actions.addCart(dataLocalProduct.current.length));
       
       
       

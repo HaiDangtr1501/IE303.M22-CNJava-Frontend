@@ -11,6 +11,7 @@ const CartPage = (props) => {
   const [listItem, setListItem] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [hasUpdated, setHasUpdated] = useState(false);
+  const [loading, setLoading] = useState(true);
   const dataLocalProduct = useRef(0)
   const totalPriceLocal = useRef(0)
   
@@ -48,7 +49,7 @@ const CartPage = (props) => {
       dataLocalProduct.current = JSON.parse(localStorage.getItem("products"))
       let total = 0
       for(let i = 0; i < dataLocalProduct.current.length; i++) {
-        if(dataLocalProduct.current[i].enable % 2 !== 0){
+        if(dataLocalProduct.current[i].enable === true){
           total = total +  (Math.round(
             (dataLocalProduct.current[i].price * dataLocalProduct.current[i].quantity * (100 - dataLocalProduct.current[i].discount)) /
               100 /

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "react-s-alert/dist/s-alert-default.css";
 import "react-s-alert/dist/s-alert-css-effects/slide.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -51,6 +51,11 @@ const App = () => {
   const [state, dispatch] = useStore();
   // const {countCartItems} = state;
   const history = useHistory();
+  const dataLocalProduct = useRef(0)
+  useEffect (()=>{
+    dataLocalProduct.current = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
+    dispatch(actions.addCart(dataLocalProduct.current.length))
+  },[])
   useEffect (async ()=>{
      const response = await CartApi.getCart();
      dispatch(actions.addCart(response.data.length))
