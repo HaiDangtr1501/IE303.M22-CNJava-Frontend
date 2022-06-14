@@ -118,9 +118,9 @@ const CheckoutPage = ({isAuth, currentUser, updateCurrentUser}) => {
 
 
   return (listItem.length > 0 ? (
-    <>
+    <div className="mr-5 ml-5 mt-3">
       <Alert variant="info">
-        <h4 className="text-center mb-0">THỦ TỤC THANH TOÁN</h4>
+        <h4 className="text-center mb-0 col-12">THỦ TỤC THANH TOÁN</h4>
       </Alert>
       <Row className="justify-content-center">
         <Col lg="7">
@@ -218,7 +218,7 @@ const CheckoutPage = ({isAuth, currentUser, updateCurrentUser}) => {
           </Button>
         </Col>
       </Row>
-    </>
+    </div>
   ):(
     !loading && <Redirect to="/cart" />
   )

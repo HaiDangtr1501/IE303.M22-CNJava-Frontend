@@ -125,7 +125,7 @@ const App = () => {
     setCurrentUser(null);
     setIsAdmin(false);
     // dispatch(actions.setCart(0))
-    Alert.success("You're logged out!");
+    Alert.success("Đăng xuất thành công!");
     dispatch(actions.setCart(cartLocal))
   };
   return (
