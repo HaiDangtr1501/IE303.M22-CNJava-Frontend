@@ -1,7 +1,8 @@
 import SideBarItem from "./sideBarItem";
 import "./sideBar.css";
 import { FaHouseUser } from "react-icons/fa";
-import { FaRegWindowMinimize } from "react-icons/fa";
+import { AiOutlineLaptop } from "react-icons/ai";
+import { GiSmartphone } from "react-icons/gi";
 import { FaUsers } from "react-icons/fa";
 import { AiOutlineDollar } from "react-icons/ai";
 import { BsFillImageFill } from "react-icons/bs";
@@ -16,6 +17,18 @@ function SideBar() {
           Admin
         </p>
       </div>
+      <SideBarItem
+        title="Quản lý laptop"
+        path="/admin/listProduct/laptop"
+        icon={<AiOutlineLaptop className="icon" />}
+        subNav={true}
+      />
+      <SideBarItem
+        title="Quản lý smartphone"
+        path="/admin/listProduct/smartphone"
+        icon={<GiSmartphone className="icon" />}
+        subNav={true}
+      />
       <SideBarItem
         title="Thêm sản phẩm"
         path="/admin/add-product"
