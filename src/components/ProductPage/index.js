@@ -1,8 +1,8 @@
-import React, { useEffect, useState, memo } from "react";
+import React, { useEffect, useState, memo, useRef } from "react";
 import { Col, Row, Carousel, Card, Alert } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useParams } from "react-router";
-
+import CartApi from "../../api/cart";
 import "./style.css";
 import ProductApi from "../../api/product";
 import ProductView from "../Product-View";
@@ -10,12 +10,19 @@ import LaptopDetails from "./SmartPhoneDetails";
 import SmartPhoneDetails from "./LapTopDetails";
 import ReviewList from "../ReviewList";
 import LoadingIndicator from "../LoadingIndicator";
+import { useStore, actions } from "../../store";
 
 const ProductPage = ({ isAuth, isAdmin, enableBtnAddToCard }) => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [cartItemsLocal, setCartItemsLocal] = useState([]);
 
   const { productId } = useParams();
+
+  const [state, dispatch] = useStore();
+  const { countCartItems } = state;
+  const dataLocalProduct = useRef(0)
 
   useEffect(() => {
     setLoading(true);
@@ -40,6 +47,18 @@ const ProductPage = ({ isAuth, isAdmin, enableBtnAddToCard }) => {
       clearTimeout(timeOut);
     };
   }, [productId]);
+  useEffect(() => {
+    dataLocalProduct.current = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
+    if (dataLocalProduct.current.length > 0) {
+      setCartItemsLocal(dataLocalProduct.current);
+    }
+  }, [countCartItems]);
+  useEffect(async () => {
+    const cartItem = await CartApi.getCart();
+    if (cartItem) {
+      setCartItems(cartItem.data);
+    }
+  }, [countCartItems]);
   console.log("product page:", enableBtnAddToCard);
   return loading ? (
     <LoadingIndicator />
@@ -57,6 +76,12 @@ const ProductPage = ({ isAuth, isAdmin, enableBtnAddToCard }) => {
               <Col md="4">
                 <div className="product-main_product">
                   <ProductView
+                    isInCart={cartItems.some(
+                      (cartItem) => cartItem.productName === product.name
+                    )}
+                    isInCartLocal={cartItemsLocal.some(
+                      (item) => item.name === product.name
+                    )}
                     isAdmin={isAdmin}
                     enableBtnAddToCard={enableBtnAddToCard}
                     product={product}

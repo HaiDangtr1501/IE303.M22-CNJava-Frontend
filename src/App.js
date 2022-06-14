@@ -104,6 +104,7 @@ const App = () => {
       dispatch(actions.setCart(cartApi))
 
       history.push("/home");
+
       return {
         type: "success",
         message: "Đăng nhập thành công",

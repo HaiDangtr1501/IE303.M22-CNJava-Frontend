@@ -139,7 +139,7 @@ const ReviewList = ({ isAuth, productId, closeButton }) => {
               <Modal.Title>Modal heading</Modal.Title>
             </Modal.Header> */}
             <Modal.Body>
-              Bạn cần đăng nhập để nhận xét!
+              Bạn cần đăng nhập để đánh giá sản phẩm!
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
