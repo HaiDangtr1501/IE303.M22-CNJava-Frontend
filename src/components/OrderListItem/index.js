@@ -196,7 +196,7 @@ const OrderListItem = ({ order, isAdmin }) => {
                   <strong>
                     Tổng tiền:{" "}
                     <span>
-                      {totalPrice.toLocaleString("vi-VN", {
+                      {orderItem.total.toLocaleString("vi-VN", {
                         style: "currency",
                         currency: "VND",
                       })}
