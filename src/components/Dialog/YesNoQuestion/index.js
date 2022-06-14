@@ -31,10 +31,10 @@ export default function YesNoQuestion({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleOnYes} variant="danger">
-          Đồng ý xóa
+        <Button onClick={handleOnYes} variant="primary">
+          Đồng ý
         </Button>
-        <Button onClick={handleOnNo} variant="primary" autoFocus>
+        <Button onClick={handleOnNo} variant="danger" autoFocus>
           Hủy
         </Button>
       </DialogActions>

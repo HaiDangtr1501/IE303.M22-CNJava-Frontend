@@ -9,6 +9,7 @@ import {
   Row,
   CardColumns,
 } from "react-bootstrap";
+import SAlert from "react-s-alert";
 import Select from "react-select";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
@@ -173,6 +174,7 @@ const SaveProduct = ({ editMode }) => {
       console.log(err);
       setMessage({ error: err.response.data.message });
       setLoading(false);
+      SAlert.error("Không thêm sản phẩm được! Vui lòng kiểm tra dữ liệu")
     }
   };
 
