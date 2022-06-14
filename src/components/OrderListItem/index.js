@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   Card,
@@ -25,13 +25,16 @@ const OrderListItem = ({ order, isAdmin }) => {
   /*modal*/
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [showReturn, setShowReturn] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleShowReturn = () => setShowReturn(true);
+  const handleCloseReturn = () => setShowReturn(false);
   const handleCloseDelete = () => setShowDelete(false);
   const handleShowDelete = () => setShowDelete(true);
   /*modal*/
-
+  const[totalPrice, setTotalPrice] = useState(0)
   const [orderItem, setOrderItem] = useState({
     id: order.id,
     status: order.status,
@@ -52,6 +55,16 @@ const OrderListItem = ({ order, isAdmin }) => {
 
   const [updating, setUpdating] = useState(false);
 
+  useEffect(()=>{
+    const orderPriceTotal = orderItem.listProductItems
+    .map((data)=>{
+       return((Math.round((data.price * (100 - data.discount)) / 100 / 10000) *
+              data.quantity *
+              10000 )  )
+    })
+    .reduce((total, current) => total + current, 0);
+    setTotalPrice(orderPriceTotal)
+  },[])
   const handleCancelOrder = async () => {
 
     setShowDelete(false);
@@ -91,14 +104,12 @@ const OrderListItem = ({ order, isAdmin }) => {
   };
   }
   const handleReturnOrder = async () => {
-    let text = "Người dùng xác nhập trạng thái đơn hàng trả về!"
-    window.confirm(text)
-    if(window.confirm(text)){
-      setUpdating(true);
+    setUpdating(true);
       try {
         const response = await OrderApi.returnOrder(orderItem.id);
         if (response.status === 200) {
           setOrderItem({ ...orderItem, status: "Returned" });
+          SAlert.success("Cập nhật đơn hàng thành công!");
           setUpdating(false);
         }
       } catch (error) {
@@ -107,8 +118,6 @@ const OrderListItem = ({ order, isAdmin }) => {
         }
         setUpdating(false);
       }
-
-    }
   };
   
   return (
@@ -187,7 +196,7 @@ const OrderListItem = ({ order, isAdmin }) => {
                   <strong>
                     Tổng tiền:{" "}
                     <span>
-                      {orderItem.total.toLocaleString("vi-VN", {
+                      {totalPrice.toLocaleString("vi-VN", {
                         style: "currency",
                         currency: "VND",
                       })}
@@ -231,13 +240,32 @@ const OrderListItem = ({ order, isAdmin }) => {
                     </>
                   )}
                 {!updating && orderItem.status === "Shipping" && (
-                  <Button
-                    size="sm"
-                    onClick={handleReturnOrder}
-                    variant="warning"
-                  >
-                    Đơn hàng trả về
-                  </Button>
+                  <>
+                    <Button
+                      size="sm"
+                      onClick={handleShowReturn}
+                      variant="warning"
+                    >
+                      Đơn hàng trả về
+                    </Button>
+                    <Modal show={showReturn} onHide={handleCloseReturn}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>
+                        Xác nhận trạng thái '
+                            Đơn hàng trả về'?
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleCloseReturn}>
+                        Đóng
+                      </Button>
+                      <Button variant="primary" onClick={handleReturnOrder}>
+                        Xác nhận
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                  </>
+                  
                 )}
                 {/* <YesNoQuestion
                           dialogTitle="Xác nhận trạng thái đơn hàng"
