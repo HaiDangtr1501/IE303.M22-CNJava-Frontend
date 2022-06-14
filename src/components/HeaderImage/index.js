@@ -56,6 +56,8 @@ const HeaderImage = ({ headerImageData, handleOnUpdate }) => {
           Xóa
         </Button>
         <YesNoQuestion
+          dialogTitle="Xác nhận xóa quảng cáo"
+          dialogDescription={`Quản trị viên xác nhận xóa quảng cáo`}
           isOpen={openDeleteDialog}
           onClickNo={() => setOpenDeleteDialog(false)}
           onClickYes={handleDelete}
