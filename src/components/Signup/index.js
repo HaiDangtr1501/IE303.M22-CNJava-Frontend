@@ -73,7 +73,7 @@ const Signup = ({ onSignup, isAuthentication }) => {
 
   return (
     <Row className="justify-content-center mb-lg-5">
-      <Card as={Col} lg="6" md="8">
+      <Card as={Col} lg="11" md="8">
         <Card.Img src = "http://localhost:3000/img/JAVA_LAPTOP-removebg-preview(2).png" style={{ width: "250px", margin: "auto", paddingTop: "10px" }}/>
         <Card.Body>
           {/* <Alert variant="info text-center">

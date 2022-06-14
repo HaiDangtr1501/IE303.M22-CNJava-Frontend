@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from "react";
+import React, { useEffect, useState, memo, useRef } from "react";
 import { Col, Row } from "react-bootstrap";
 import ProductView from "../Product-View";
 import ProductApi from "../../api/product";
@@ -16,10 +16,18 @@ const ProductList = (props) => {
   const [totalPage, setTotalPage] = useState();
   const [loading, setLoading] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [cartItemsLocal, setCartItemsLocal] = useState([]);
   const [check, setCheck] = useState(false);
 
   const [state, dispatch] = useStore();
   const { countCartItems } = state;
+  const dataLocalProduct = useRef(0)
+  useEffect(() => {
+    dataLocalProduct.current = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
+    if (dataLocalProduct.current.length > 0) {
+      setCartItemsLocal(dataLocalProduct.current);
+    }
+  }, [countCartItems]);
   useEffect(async () => {
     const cartItem = await CartApi.getCart();
     if (cartItem) {
@@ -75,6 +83,9 @@ const ProductList = (props) => {
             <ProductView
               isInCart={cartItems.some(
                 (cartItem) => cartItem.productName === product.name
+              )}
+              isInCartLocal={cartItemsLocal.some(
+                (item) => item.name === product.name
               )}
               isAdmin={props.isAdmin}
               product={product}

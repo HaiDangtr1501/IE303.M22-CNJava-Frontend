@@ -13,7 +13,8 @@
     font-weight: 600;
     transition: all 0.5s ease-in-out;
     margin-left: 5px;
-    margin-right: 5px;
+    margin-right: 20px;
+    padding: 0 !important;
 }
 .navBar-item:hover{
     color: rgb(13, 110, 253) !important;

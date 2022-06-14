@@ -100,7 +100,7 @@ const Login = (props) => {
 
   return (
     <Row className="justify-content-center mb-5">
-      <Card as={Col} md="6" >
+      <Card as={Col} md="11" >
         <Card.Img src = "http://localhost:3000/img/JAVA_LAPTOP-removebg-preview(2).png" style={{ width: "250px", margin: "auto", paddingTop: "10px" }}/>
         <Card.Body>
           {/* <Card.Title className="mb-4">

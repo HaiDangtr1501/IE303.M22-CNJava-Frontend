@@ -19,26 +19,26 @@ const LayoutLoginSignup = (props) => {
     }
     console.log(props)
     return (
-        <>
-            <div className="login-signup__wrapper ">
-        <div
-          className="login-signup--login active"
-          id="loginRef"
-          onClick={() => setClickChange(true)}
-        >
-          Đăng nhập
-        </div>
+        <div className="layout-container">
+          <div className="login-signup__wrapper ">
+            <div
+              className="login-signup--login active"
+              id="loginRef"
+              onClick={() => setClickChange(true)}
+            >
+                Đăng nhập
+            </div>
+            <div
+              className="login-signup--signup"
+              id="registerRef"
+              onClick={() => setClickChange(false)}
+            >
+              Đăng ký
+            </div>
+          </div>
 
-        <div
-          className="login-signup--signup"
-          id="registerRef"
-          onClick={() => setClickChange(false)}
-        >
-          Đăng ký
+          {clickChange === true ? <Login isAuthentication = {props.isAuthentication} onLocalLogin = {props.onLocalLogin} loading = {props.loading} {...props}/> : <Signup isAuthentication = {props.isAuthentication} {...props}/>}
         </div>
-      </div>
-      {clickChange === true ? <Login isAuthentication = {props.isAuthentication} onLocalLogin = {props.onLocalLogin} loading = {props.loading} {...props}/> : <Signup isAuthentication = {props.isAuthentication} {...props}/>}
-        </>
     )
 }
 

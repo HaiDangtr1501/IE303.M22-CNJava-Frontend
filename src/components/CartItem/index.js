@@ -129,6 +129,7 @@ const CartItem = ({ isAuth,data, onChange }) => {
     for(let i = 0; i < newRecord.length; i++){
       newRecord[i].key = i +1;
     }
+    SAlert.success(`Đã xóa thành công sản phẩm ${data.name} ra khỏi giỏ hàng`);
     onChange()
     dispatch(actions.addCart(newRecord.length));
     localStorage.setItem("products", JSON.stringify(newRecord));

@@ -104,6 +104,7 @@ const App = () => {
       dispatch(actions.setCart(cartApi))
 
       history.push("/home");
+
       return {
         type: "success",
         message: "Đăng nhập thành công",
@@ -124,7 +125,7 @@ const App = () => {
     setCurrentUser(null);
     setIsAdmin(false);
     // dispatch(actions.setCart(0))
-    Alert.success("You're logged out!");
+    Alert.success("Đăng xuất thành công!");
     dispatch(actions.setCart(cartLocal))
   };
   return (
