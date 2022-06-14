@@ -1,13 +1,19 @@
 import { NavLink, Link } from "react-router-dom";
 import "./sideBarItem.css";
-import { FaUsers } from "react-icons/fa";
-import { AiOutlineDollar } from "react-icons/ai";
-import { BsFillImageFill } from "react-icons/bs";
-import { FaRegCalendarPlus } from "react-icons/fa";
+import { useState } from "react";
 function SideBarItem(props) {
+  const [showSub,setShowSubNav]  = useState(false);
+  const handleShow =() => {
+    setShowSubNav(!showSub);
+  }
   return (
     <div className="sideBarItem-container">
-      <Link className="sideBarItem-link" activeClassName="active" to={props.path}>
+      <Link
+        className="sideBarItem-link"
+        activeClassName="active"
+        to={props.path}
+        onClick={handleShow}
+      >
         <div className="sideBarItem-link_content">
           <p className="sideBarItem-link_title">
             {props.icon}

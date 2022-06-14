@@ -39,6 +39,7 @@ import SendEmailVerification from "./components/EmailVerificationPage";
 import Admin from "./page/AdminPgae/admin";
 import CartApi from "./api/cart";
 import  { useStore,actions } from "./store";
+import AdminListProducts from "./components/Admin/AdminListProduct/adminListProduct";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -257,7 +258,7 @@ const App = () => {
               )}
             />
           )}
-          {isAdmin && (
+           {isAdmin && (
             <Route
               exact
               path={"/admin/header-image"}
@@ -266,6 +267,24 @@ const App = () => {
               )}
             />
           )}
+          {isAdmin && (
+            <Route
+              exact
+              path={"/admin/listProduct/laptop"}
+              render={(props) => (
+                <Admin mainPage={<AdminListProducts type="Laptop"/>} {...props} />
+              )}
+            />
+          )} 
+          {isAdmin && (
+            <Route
+              exact
+              path={"/admin/listProduct/smartphone"}
+              render={(props) => (
+                <Admin mainPage={<AdminListProducts type="smartphone"/>} {...props} />
+              )}
+            />
+          )}          
           {/* Admin */}
           <Route
             exact
